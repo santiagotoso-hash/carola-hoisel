@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carola Hoisel — Artista</title>
+  <meta name="description" content="Carola Hoisel, artista. Obras e arte sob medida.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body id="topo">
+
+  <!-- HERO -->
+  <section class="hero">
+    <header class="header">
+      <a href="#topo" class="brand">Carola Hoisel</a>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="menu" id="menu">
+        <ul>
+          <li><a href="#topo">Início</a></li>
+          <li><a href="#obras">Os Trabralhos</a></li>
+          <li><a href="#sob-medida">Artes Personalizadas</a></li>
+          <li><a href="#quem-sou">Quem sou</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Troque por <img src="hero.jpg"> ou <video> (veja o README no script.js) -->
+    <div class="hero-media ph" style="--c1:#c9a882;--c2:#8c6a4f"></div>
+    <div class="hero-shade"></div>
+
+    <div class="hero-copy">
+      <h1 class="hero-title">Carola Hoisel</h1>
+      <p class="eyebrow light">artista visual · [sua assinatura aqui]</p>
+      <a href="#obras" class="pill pill-glass">Conhecer as obras</a>
+    </div>
+  </section>
+
+  <!-- OBRAS -->
+  <section id="obras" class="sec bg-areia">
+    <div class="sec-text reveal">
+      <p class="eyebrow">portfólio</p>
+      <h2>Obras</h2>
+      <p>[Frase curta sobre a poética da Carola: o que move a pintura dela, em duas linhas.]</p>
+    </div>
+    <div class="gallery" data-count="5" data-w="72" data-h="280" data-colors="#a8825f,#7d9a8c,#d9c4b2,#b07a6e,#5d6b7a">
+    </div>
+    <div class="sec-cta reveal"><a class="pill pill-dark" href="https://www.instagram.com/carolahoisel/" target="_blank"
+        rel="noopener">Ver mais no Instagram</a></div>
+  </section>
+
+  <!-- DESTAQUE / PRODUTO -->
+  <section class="sec bg-creme">
+    <div class="feature reveal">
+      <div class="feature-img ph" style="--c1:#9c6244;--c2:#6e4029" role="img" aria-label="Obra em destaque"></div>
+      <p class="eyebrow">obra em destaque</p>
+      <h2 class="siena">[Título da obra<br>ou coleção]</h2>
+      <p>[Descrição curta: técnica, tamanho e a história por trás dela.]</p>
+    </div>
+    <div class="price-row reveal">
+      <p class="price">R$ 000</p>
+      <a class="pill pill-siena" data-wa="Olá, Carola! Tenho interesse na obra em destaque.">Quero esta</a>
+    </div>
+  </section>
+
+  <!-- SOB MEDIDA -->
+  <section id="sob-medida" class="sec bg-peach">
+    <div class="sec-text reveal">
+      <p class="eyebrow">sob medida</p>
+      <h2>Arte Personalizada</h2>
+      <p>Uma obra criada especialmente para você — ou para presentear alguém que você ama. Cada traço carrega uma
+        intenção única.</p>
+    </div>
+    <div class="gallery" data-count="4" data-w="64" data-h="260" data-colors="#b07a6e,#c9a882,#8a9a86,#e3d2c0"></div>
+    <div class="sec-cta reveal"><a class="pill pill-dark"
+        data-wa="Olá, Carola! Quero encomendar uma arte personalizada.">Encomendar</a></div>
+  </section>
+
+  <!-- QUEM SOU -->
+  <section id="quem-sou" class="sec bg-areia about">
+    <div class="about-grid">
+      <div class="about-photo ph reveal" style="--c1:#8c6a4f;--c2:#5a3d2b" role="img"
+        aria-label="Retrato de Carola Hoisel"></div>
+      <div class="reveal">
+        <h2>Quem sou</h2>
+        <p>[Parágrafo de abertura: onde nasceu, onde vive e trabalha, e como começou a pintar.]</p>
+        <p>[Segundo parágrafo: técnicas, temas recorrentes, influências e o processo no ateliê.]</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot reveal">
+    <div class="contact">
+      <a href="mailto:carola.hoisel@gmail.com">carola.hoisel@gmail.com</a>
+      <a href="https://wa.me/5571993021728" target="_blank" rel="noopener">+55 71 99302-1728</a>
+    </div>
+    <a class="insta" href="https://www.instagram.com/carolahoisel/" target="_blank" rel="noopener">@carolahoisel</a>
+    <p>© <span id="year"></span> Carola Hoisel</p>
+    <a class="credit" id="creditLink" href="#" target="_blank" rel="noopener"
+      aria-label="Site desenvolvido por litocode">
+      <span>Desenvolvido por</span>
+      <img src="litocode.png" alt="litocode">
+    </a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
