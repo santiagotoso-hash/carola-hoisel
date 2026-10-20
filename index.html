@@ -20,13 +20,20 @@
   <section class="hero">
     <header class="header">
       <a href="#topo" class="brand">Carola Hoisel</a>
-      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="header-actions">
+        <button class="cart-btn" id="cartOpen" type="button" aria-label="Abrir carrinho">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          <span class="cart-count" id="cartCount" hidden>0</span>
+        </button>
+        <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       <nav class="menu" id="menu">
         <ul>
           <li><a href="#topo">Início</a></li>
           <li><a href="#obras">Os Trabralhos</a></li>
+          <li><a href="#loja">Obras à venda</a></li>
           <li><a href="#sob-medida">Artes Personalizadas</a></li>
           <li><a href="#quem-sou">Quem sou</a></li>
         </ul>
@@ -57,18 +64,14 @@
         rel="noopener">Ver mais no Instagram</a></div>
   </section>
 
-  <!-- DESTAQUE / PRODUTO -->
-  <section class="sec bg-creme">
-    <div class="feature reveal">
-      <div class="feature-img ph" style="--c1:#9c6244;--c2:#6e4029" role="img" aria-label="Obra em destaque"></div>
-      <p class="eyebrow">obra em destaque</p>
-      <h2 class="siena">[Título da obra<br>ou coleção]</h2>
-      <p>[Descrição curta: técnica, tamanho e a história por trás dela.]</p>
+  <!-- LOJA -->
+  <section id="loja" class="sec bg-creme">
+    <div class="sec-text reveal">
+      <p class="eyebrow">obras originais</p>
+      <h2 class="siena">Obras à venda</h2>
+      <p>Cada obra é única e assinada. Adicione ao carrinho e finalize a compra pelo WhatsApp com a Carola.</p>
     </div>
-    <div class="price-row reveal">
-      <p class="price">R$ 000</p>
-      <a class="pill pill-siena" data-wa="Olá, Carola! Tenho interesse na obra em destaque.">Quero esta</a>
-    </div>
+    <div class="shop" id="shop"></div>
   </section>
 
   <!-- SOB MEDIDA -->
@@ -110,6 +113,22 @@
       <img src="litocode.png" alt="litocode">
     </a>
   </footer>
+
+  <!-- CARRINHO -->
+  <div class="drawer-overlay" id="drawerOverlay" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="Carrinho de compras" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>Seu carrinho</h3>
+      <button type="button" class="drawer-close" id="cartClose" aria-label="Fechar carrinho">×</button>
+    </div>
+    <p class="drawer-empty" id="cartEmpty">Seu carrinho está vazio. Escolha uma obra para começar.</p>
+    <ul class="drawer-items" id="cartItems"></ul>
+    <div class="drawer-foot" id="cartFoot">
+      <div class="drawer-total"><span>Total</span><strong id="cartTotal">R$ 0</strong></div>
+      <p class="drawer-note">Frete e forma de pagamento combinados com a Carola pelo WhatsApp.</p>
+      <button type="button" class="pill pill-siena drawer-checkout" id="checkout">Finalizar pelo WhatsApp</button>
+    </div>
+  </aside>
 
   <script src="script.js"></script>
 </body>
