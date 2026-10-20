@@ -57,12 +57,16 @@ document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 // ---- Loja e carrinho ----
 // Substitua pelas obras reais. image: caminho da foto (ex.: "obras/obra-1.jpg"); vazio = bloco de cor.
 const obras = [
-  { id: 1, titulo: "Obra I",   tecnica: "Acrílica",      medidas: "00 × 00 cm", preco: 1900, cor: "#c9a882", image: "" },
-  { id: 2, titulo: "Obra II",  tecnica: "Óleo",          medidas: "00 × 00 cm", preco: 3400, cor: "#7d9a8c", image: "" },
-  { id: 3, titulo: "Obra III", tecnica: "Aquarela",      medidas: "00 × 00 cm", preco: 850,  cor: "#d9c4b2", image: "" },
-  { id: 4, titulo: "Obra IV",  tecnica: "Óleo",          medidas: "00 × 00 cm", preco: 4200, cor: "#b07a6e", image: "" },
-  { id: 5, titulo: "Obra V",   tecnica: "Técnica mista", medidas: "00 × 00 cm", preco: 2300, cor: "#9c6244", image: "" },
-  { id: 6, titulo: "Obra VI",  tecnica: "Acrílica",      medidas: "00 × 00 cm", preco: 1200, cor: "#5d6b7a", image: "" },
+  // cat: "fine-art" | "prints" | "tecido" (cada categoria aparece na sua seção). Os ids não podem se repetir.
+  { id: 1,  cat: "fine-art", titulo: "Aquarela I",   tecnica: "Aquarela original", medidas: "00 × 00 cm", preco: 1900, cor: "#c9a882", image: "" },
+  { id: 2,  cat: "fine-art", titulo: "Aquarela II",  tecnica: "Aquarela original", medidas: "00 × 00 cm", preco: 1400, cor: "#7d9a8c", image: "" },
+  { id: 3,  cat: "fine-art", titulo: "Aquarela III", tecnica: "Aquarela original", medidas: "00 × 00 cm", preco: 850,  cor: "#d9c4b2", image: "" },
+  { id: 11, cat: "prints",   titulo: "Print I",      tecnica: "Arquivo digital",   medidas: "alta resolução", preco: 60, cor: "#b07a6e", image: "" },
+  { id: 12, cat: "prints",   titulo: "Print II",     tecnica: "Arquivo digital",   medidas: "alta resolução", preco: 60, cor: "#9c6244", image: "" },
+  { id: 13, cat: "prints",   titulo: "Print III",    tecnica: "Arquivo digital",   medidas: "alta resolução", preco: 60, cor: "#5d6b7a", image: "" },
+  { id: 21, cat: "tecido",   titulo: "Canga",        tecnica: "Canga",             medidas: "00 × 00 cm", preco: 180, cor: "#8a9a86", image: "" },
+  { id: 22, cat: "tecido",   titulo: "Lenço",        tecnica: "Lenço de seda",     medidas: "00 × 00 cm", preco: 220, cor: "#e3d2c0", image: "" },
+  { id: 23, cat: "tecido",   titulo: "Pareô",        tecnica: "Pareô",             medidas: "00 × 00 cm", preco: 160, cor: "#b07a6e", image: "" },
 ];
 const brl = (n) => "R$ " + n.toLocaleString("pt-BR");
 const $ = (id) => document.getElementById(id);
@@ -75,7 +79,7 @@ const media = (o, cls) => o.image
   : `<div class="${cls} ph" style="--c1:${o.cor};--c2:${o.cor}"></div>`;
 
 function renderShop() {
-  $("shop").innerHTML = obras.map((o) => {
+  document.querySelectorAll(".shop").forEach((shop) => { shop.innerHTML = obras.filter((o) => o.cat === shop.dataset.cat).map((o) => {
     const added = cart.includes(o.id);
     return `<article class="product reveal in">
       ${media(o, "product-img")}
@@ -84,7 +88,7 @@ function renderShop() {
         <p class="product-tech">${esc(o.tecnica)} · ${esc(o.medidas)}</p>
         <button type="button" class="pill ${added ? "pill-line" : "pill-dark"} product-btn" data-add="${o.id}" ${added ? "disabled" : ""}>${added ? "No carrinho" : "Adicionar ao carrinho"}</button>
       </div></article>`;
-  }).join("");
+  }).join(""); });
 }
 
 function renderCart() {
@@ -109,10 +113,10 @@ function setDrawer(open) {
   document.body.classList.toggle("no-scroll", open);
 }
 
-$("shop").addEventListener("click", (e) => {
+document.querySelectorAll(".shop").forEach((shop) => shop.addEventListener("click", (e) => {
   const id = Number(e.target.dataset.add);
   if (id && !cart.includes(id)) { cart.push(id); renderCart(); setDrawer(true); }
-});
+}));
 $("cartItems").addEventListener("click", (e) => {
   const id = Number(e.target.dataset.remove);
   if (id) { cart = cart.filter((c) => c !== id); renderCart(); }
