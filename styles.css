@@ -152,3 +152,68 @@ button.pill-line { border: 1px solid rgba(61,31,21,.35); }
 
 @media (min-width: 600px) { .shop { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 900px) { .shop { grid-template-columns: repeat(3, 1fr); padding: 0 48px; } }
+
+/* página de coleção e "ver mais" */
+.header-solid { position: relative; background: var(--dark); color: #fff; padding-bottom: 8px; }
+.header-solid .menu { margin-bottom: 0; }
+.colecao { background: var(--creme); min-height: 70vh; padding-top: 48px; }
+.back { display: inline-block; margin-bottom: 24px; font-size: .75rem; text-transform: uppercase; letter-spacing: .2em; opacity: .6; }
+.back:hover { opacity: 1; }
+.sec-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.pill-outline { border: 1px solid rgba(61,31,21,.45); color: var(--terra); background: transparent; }
+.pill-outline:hover { background: var(--terra); color: var(--creme); opacity: 1; }
+.shop[hidden], .grid-gallery[hidden], .sec-cta[hidden] { display: none; }
+.grid-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 24px 32px; max-width: 1100px; margin: 0 auto; }
+.grid-gallery > * { aspect-ratio: 4/5; border-radius: 16px; width: 100%; object-fit: cover; }
+.colecao .shop { padding-bottom: 32px; }
+@media (min-width: 800px) { .grid-gallery { grid-template-columns: repeat(3, 1fr); padding: 0 48px 32px; } }
+.product-img { aspect-ratio: 4/5; }
+.grid-gallery.grid-3 { grid-template-columns: 1fr; gap: 20px; padding-bottom: 24px; }
+@media (min-width: 600px) { .grid-gallery.grid-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .grid-gallery.grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+/* seletor de tamanho */
+.sizes { display: flex; gap: 6px; margin-bottom: 12px; }
+.size { flex: 1; font: inherit; font-size: .75rem; font-weight: 600; letter-spacing: .05em; padding: 7px 0; border-radius: 999px; border: 1px solid rgba(61,31,21,.3); background: transparent; color: var(--terra); cursor: pointer; transition: background .2s, color .2s; }
+.size:hover { border-color: var(--terra); }
+.size.on { background: var(--terra); color: var(--creme); border-color: var(--terra); }
+
+/* ampliar imagem */
+img.product-img, .gallery img, .grid-gallery img { cursor: zoom-in; }
+.lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(36,22,16,.93); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; gap: 12px; cursor: zoom-out; }
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: 94vw; max-height: 84vh; object-fit: contain; border-radius: 6px; cursor: default; box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+.lightbox-cap { color: var(--creme); font-family: var(--display); font-size: 1.3rem; text-align: center; }
+.lightbox-close { position: absolute; top: 12px; right: 18px; border: 0; background: none; color: #fff; font-size: 2.4rem; line-height: 1; cursor: pointer; }
+
+/* imagens: sem arrastar, selecionar nem menu de toque longo */
+img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+
+/* efeito ao passar o mouse: imagem aumenta 5% */
+@media (hover: hover) {
+  .product-img, .grid-gallery > .reveal.in { transition: transform .4s var(--ease); }
+  .product-img:hover { transform: scale(1.05); }
+  .grid-gallery > .reveal.in { position: relative; }
+  .grid-gallery > .reveal.in:hover { transform: scale(1.05); z-index: 2; }
+}
+
+/* carrossel de fotos da obra */
+.slider { position: relative; }
+.slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.slides::-webkit-scrollbar { display: none; }
+.slides .product-img { flex: 0 0 100%; scroll-snap-align: start; object-fit: cover; }
+.slide-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border: 0; border-radius: 50%; background: rgba(245,237,228,.85); color: var(--terra); font-size: 1.4rem; line-height: 1; cursor: pointer; display: grid; place-items: center; padding: 0 0 3px; }
+.slide-btn.prev { left: 8px; }
+.slide-btn.next { right: 8px; }
+.slide-btn:hover { background: var(--creme); }
+.dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; pointer-events: none; }
+.dots span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.55); }
+.dots span.on { background: #fff; box-shadow: 0 0 2px rgba(0,0,0,.4); }
+.slides .product-img:hover { transform: none; }
+
+/* carrossel: o conjunto de fotos aumenta 5% (o .slider corta o excesso, sem criar barra de rolagem) */
+.slider { overflow: hidden; }
+@media (hover: hover) {
+  .slides { transition: transform .4s var(--ease); }
+  .slider:hover .slides { transform: scale(1.05); }
+}

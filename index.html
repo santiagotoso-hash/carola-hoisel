@@ -11,7 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=23">
 </head>
 
 <body id="topo">
@@ -24,8 +24,9 @@
         <button class="cart-btn" id="cartOpen" type="button" aria-label="Abrir carrinho">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"
             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M6 7h12l-1 13H7L6 7z" />
-            <path d="M9 7a3 3 0 0 1 6 0" />
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
           </svg>
           <span class="cart-count" id="cartCount" hidden>0</span>
         </button>
@@ -63,9 +64,11 @@
     <div class="sec-text reveal">
       <p class="eyebrow">obras originais</p>
       <h2 class="siena">Aquarelas Fine Art</h2>
-      <p>Aquarelas originais, únicas e assinadas, em papel de algodão. Adicione ao carrinho e finalize a compra pelo WhatsApp com a Carola.</p>
+      <p>Qualidade de galeria ao seu alcance: impressao em papel 100% algodão, pigmentos que resistem ao tempo e a
+        textura viva da aquarela. </br> Não inclui moldura.</p>
     </div>
-    <div class="shop" data-cat="fine-art"></div>
+    <div class="shop" data-cat="fine-art" data-limit="3"></div>
+    <div class="sec-cta reveal"><a class="pill pill-outline" href="colecao.html?c=fine-art">Ver mais</a></div>
   </section>
 
   <!-- AQUARELAS PERSONALIZADAS -->
@@ -73,11 +76,14 @@
     <div class="sec-text reveal">
       <p class="eyebrow">sob medida</p>
       <h2>Aquarelas Personalizadas</h2>
-      <p>Uma aquarela criada especialmente para você — um retrato, um lugar, uma lembrança ou um presente. Cada traço carrega uma intenção única.</p>
+      <p>Uma aquarela criada especialmente para você — um retrato, um lugar, uma lembrança ou um presente. Cada traço
+        carrega uma intenção única.</p>
     </div>
-    <div class="gallery" data-count="4" data-w="64" data-h="260" data-colors="#b07a6e,#c9a882,#8a9a86,#e3d2c0"></div>
+    <div class="grid-gallery grid-3" data-count="3" data-colors="#b07a6e,#c9a882,#8a9a86"></div>
     <div class="sec-cta reveal"><a class="pill pill-dark"
-        data-wa="Olá, Carola! Quero encomendar uma aquarela personalizada.">Encomendar</a></div>
+        data-wa="Olá, Carola! Quero encomendar uma aquarela personalizada.">Encomendar</a>
+      <a class="pill pill-outline" href="colecao.html?c=personalizadas">Ver mais</a>
+    </div>
   </section>
 
   <!-- PRINTS -->
@@ -85,9 +91,11 @@
     <div class="sec-text reveal">
       <p class="eyebrow">arquivo digital</p>
       <h2 class="siena">Prints</h2>
-      <p>Compre o arquivo em alta resolução e imprima onde e no tamanho que preferir. O arquivo é enviado depois da confirmação do pagamento.</p>
+      <p>Compre o arquivo em alta resolução e imprima onde e no tamanho que preferir. O arquivo é enviado depois da
+        confirmação do pagamento.</p>
     </div>
-    <div class="shop" data-cat="prints"></div>
+    <div class="shop" data-cat="prints" data-limit="3"></div>
+    <div class="sec-cta reveal"><a class="pill pill-outline" href="colecao.html?c=prints">Ver mais</a></div>
   </section>
 
   <!-- ARTE NO TECIDO -->
@@ -97,7 +105,8 @@
       <h2>Arte no Tecido</h2>
       <p>Cangas, lenços e pareôs com as aquarelas da Carola estampadas, para usar e levar a arte com você.</p>
     </div>
-    <div class="shop" data-cat="tecido"></div>
+    <div class="shop" data-cat="tecido" data-limit="3"></div>
+    <div class="sec-cta reveal"><a class="pill pill-outline" href="colecao.html?c=tecido">Ver mais</a></div>
   </section>
 
   <!-- MURAIS -->
@@ -105,11 +114,14 @@
     <div class="sec-text reveal">
       <p class="eyebrow">projetos</p>
       <h2>Murais</h2>
-      <p>Pintura em paredes para casas, lojas, restaurantes e espaços de convivência. Cada mural é pensado para o lugar e para quem vai viver nele.</p>
+      <p>Pintura em paredes para casas, lojas, restaurantes e espaços de convivência. Cada mural é pensado para o lugar
+        e para quem vai viver nele.</p>
     </div>
-    <div class="gallery" data-count="4" data-w="72" data-h="280" data-colors="#8a9a86,#c9a882,#b07a6e,#7d9a8c"></div>
-    <div class="sec-cta reveal"><a class="pill pill-dark"
-        data-wa="Olá, Carola! Quero um orçamento para um mural.">Pedir orçamento</a></div>
+    <div class="grid-gallery grid-3" data-count="3" data-colors="#8a9a86,#c9a882,#b07a6e"></div>
+    <div class="sec-cta reveal"><a class="pill pill-dark" data-wa="Olá, Carola! Quero um orçamento para um mural.">Pedir
+        orçamento</a>
+      <a class="pill pill-outline" href="colecao.html?c=murais">Ver mais</a>
+    </div>
   </section>
 
   <!-- ESTAMPAS -->
@@ -119,9 +131,11 @@
       <h2 class="siena">Estampas</h2>
       <p>Estampas autorais criadas a partir das aquarelas, para moda, decoração, papelaria e outros produtos.</p>
     </div>
-    <div class="gallery" data-count="5" data-w="56" data-h="260" data-colors="#d9c4b2,#7d9a8c,#b07a6e,#c9a882,#5d6b7a"></div>
-    <div class="sec-cta reveal"><a class="pill pill-siena"
-        data-wa="Olá, Carola! Tenho interesse nas estampas.">Falar sobre estampas</a></div>
+    <div class="grid-gallery grid-3" data-count="3" data-colors="#d9c4b2,#7d9a8c,#b07a6e"></div>
+    <div class="sec-cta reveal"><a class="pill pill-siena" data-wa="Olá, Carola! Tenho interesse nas estampas.">Falar
+        sobre estampas</a>
+      <a class="pill pill-outline" href="colecao.html?c=estampas">Ver mais</a>
+    </div>
   </section>
 
   <!-- QUEM SOU -->
@@ -167,7 +181,7 @@
     </div>
   </aside>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=23"></script>
 </body>
 
 </html>
