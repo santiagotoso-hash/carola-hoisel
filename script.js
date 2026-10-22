@@ -7,6 +7,7 @@ document.getElementById("creditLink").href = `https://wa.me/${LITOCODE_WHATSAPP}
 // Fotos reais das seções de galeria (personalizadas, murais, estampas): coloque os arquivos numa pasta
 // (ex.: murais/) e liste aqui. Sem fotos, aparecem blocos de cor no lugar.
 const fotos = {
+  "personalizadas": ["AQUARELAS-PERSONALIZADAS/1.jpeg", "AQUARELAS-PERSONALIZADAS/2.jpeg", "AQUARELAS-PERSONALIZADAS/3.jpeg"],
   // "murais": ["murais/1.jpg", "murais/2.jpg", "murais/3.jpg"],
 };
 
