@@ -17,12 +17,12 @@ const fotos = {
 const categorias = {
   "fine-art": {
     tipo: "loja", eyebrow: "obras originais", titulo: "Aquarelas Fine Art",
-    texto: "Aquarelas autorais, únicas e assinadas, em papel de algodão. Adicione ao carrinho e finalize a compra pelo WhatsApp com a Carola."
+    texto: "Qualidade de galeria ao seu alcance: impressao em papel 100% algodão, pigmentos que resistem ao tempo e a textura viva da aquarela.\nNão inclui moldura."
   },
   "personalizadas": {
     tipo: "galeria", eyebrow: "sob medida", titulo: "Aquarelas Personalizadas",
     texto: "Uma aquarela criada especialmente para você — um retrato, um lugar, uma lembrança ou um presente. Cada traço carrega uma intenção única.",
-    cta: "Encomendar", wa: "Olá, Carola! Quero encomendar uma aquarela personalizada.",
+    cta: "Quero um orçamento", href: "orcamento.html",
     cores: ["#b07a6e", "#c9a882", "#8a9a86", "#e3d2c0"], total: 9
   },
   "prints": {
@@ -110,8 +110,8 @@ const obras = [
   { id: 39, cat: "fine-art", titulo: "Peixe-voador", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/peixe-voador.jpg" },
   { id: 40, cat: "fine-art", titulo: "Verão Nórdico", tecnica: "Aquarela", cor: "#d9c4b2", image: "AQUARELAS/verao-nordico.jpg" },
   { id: 41, cat: "fine-art", titulo: "Água-viva", tecnica: "Aquarela", cor: "#5d6b7a", image: "AQUARELAS/agua-viva.jpg" },
-  { id: 42, cat: "fine-art", titulo: "Xangô",                   tecnica: "Aquarela", cor: "#9c6244", image: "AQUARELAS/xango.jpeg" },
-  { id: 43, cat: "fine-art", titulo: "Ibejis",                   tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/ibejis.jpeg", extras: ["AQUARELAS/ibejis-mockup.jpg"] },
+  { id: 42, cat: "fine-art", titulo: "Xangô", tecnica: "Aquarela", cor: "#9c6244", image: "AQUARELAS/xango.jpeg" },
+  { id: 43, cat: "fine-art", titulo: "Ibejis", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/ibejis.jpeg", extras: ["AQUARELAS/ibejis-mockup.jpg"] },
   { id: 11, cat: "prints", titulo: "Print I", tecnica: "Arquivo digital", cor: "#b07a6e", image: "" },
   { id: 12, cat: "prints", titulo: "Print II", tecnica: "Arquivo digital", cor: "#9c6244", image: "" },
   { id: 13, cat: "prints", titulo: "Print III", tecnica: "Arquivo digital", cor: "#5d6b7a", image: "" },
@@ -188,7 +188,75 @@ function renderShop() {
   });
 }
 
-const totalDoCarrinho = () => cart.reduce((s, c) => s + precoDe(porId(c.id), c.size), 0);
+const subtotalDoCarrinho = () => cart.reduce((s, c) => s + precoDe(porId(c.id), c.size), 0);
+
+// ---- Frete (estimativa por região, a partir da Bahia) ----
+// Valores de teste. PAC: base = frete do 1º item, adicional = cada item físico a mais. SEDEX = PAC × SEDEX_FATOR, com prazo menor.
+// Prints são arquivos digitais e não pagam frete.
+// Para frete exato dos Correios é preciso um serviço com chave de acesso (ex.: Melhor Envio), que exige um servidor.
+const SEDEX_FATOR = 1.7;
+const FRETE = {
+  BA: { nome: "Bahia", base: 18, adicional: 8, pac: "3 a 5 dias úteis", sedex: "1 a 2 dias úteis" },
+  NE: { nome: "Nordeste", base: 28, adicional: 10, pac: "5 a 8 dias úteis", sedex: "2 a 3 dias úteis" },
+  SE: { nome: "Sudeste", base: 38, adicional: 12, pac: "6 a 9 dias úteis", sedex: "2 a 4 dias úteis" },
+  CO: { nome: "Centro-Oeste", base: 42, adicional: 12, pac: "7 a 10 dias úteis", sedex: "3 a 5 dias úteis" },
+  S: { nome: "Sul", base: 45, adicional: 14, pac: "7 a 10 dias úteis", sedex: "3 a 5 dias úteis" },
+  N: { nome: "Norte", base: 55, adicional: 16, pac: "10 a 15 dias úteis", sedex: "4 a 7 dias úteis" },
+};
+const SERVICOS = { pac: "PAC", sedex: "SEDEX" };
+const REGIAO = {};
+[["N", "AC AP AM PA RO RR TO"], ["NE", "AL CE MA PB PE PI RN SE"], ["CO", "DF GO MT MS"], ["SE", "ES MG RJ SP"], ["S", "PR RS SC"]]
+  .forEach(([r, ufs]) => ufs.split(" ").forEach((uf) => { REGIAO[uf] = r; }));
+REGIAO.BA = "BA";
+
+let destino = null; // { cep, cidade, uf }
+try { destino = JSON.parse(localStorage.getItem("carola-destino")); } catch (e) { }
+let servico = "pac";
+try { if (SERVICOS[localStorage.getItem("carola-servico")]) servico = localStorage.getItem("carola-servico"); } catch (e) { }
+
+const itensFisicos = () => cart.filter((c) => porId(c.id).cat !== "prints").length;
+const freteValor = (tipo) => {
+  const f = FRETE[REGIAO[destino.uf]];
+  const pac = f.base + (itensFisicos() - 1) * f.adicional;
+  return tipo === "sedex" ? Math.round(pac * SEDEX_FATOR) : pac;
+};
+const freteDoCarrinho = () => {
+  if (!itensFisicos()) return 0;
+  if (!destino) return null; // ainda não calculado
+  return freteValor(servico);
+};
+
+function mostrarFrete() {
+  const msg = $("freteMsg");
+  const opcoes = $("freteOpcoes");
+  $("freteBox").hidden = !itensFisicos();
+  if (!itensFisicos() || !destino) { msg.textContent = ""; opcoes.innerHTML = ""; return; }
+  const f = FRETE[REGIAO[destino.uf]];
+  msg.textContent = `Entrega para ${destino.cidade} - ${destino.uf}`;
+  opcoes.innerHTML = Object.keys(SERVICOS).map((s) => `<label class="opcao${s === servico ? " on" : ""}">
+    <input type="radio" name="servico" value="${s}" ${s === servico ? "checked" : ""}>
+    <span><strong>${SERVICOS[s]}</strong> · ${f[s]}</span><span>${brl(freteValor(s))}</span></label>`).join("");
+}
+
+async function calcularFrete() {
+  const cep = $("cep").value.replace(/\D/g, "");
+  const msg = $("freteMsg");
+  if (cep.length !== 8) { msg.textContent = "Digite um CEP com 8 números."; return; }
+  msg.textContent = "Calculando…";
+  try {
+    const r = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const d = await r.json();
+    if (d.erro || !REGIAO[d.uf]) { msg.textContent = "CEP não encontrado. Confira os números."; return; }
+    destino = { cep, cidade: d.localidade, uf: d.uf };
+    try { localStorage.setItem("carola-destino", JSON.stringify(destino)); } catch (e) { }
+    renderCart();
+  } catch (e) {
+    msg.textContent = "Não foi possível consultar o CEP agora. Tente de novo ou combine o frete pelo WhatsApp.";
+  }
+}
+
+// Total = subtotal + frete (quando já calculado)
+const totalDoCarrinho = () => subtotalDoCarrinho() + (freteDoCarrinho() || 0);
 const nomeDoItem = (c) => txt(porId(c.id).titulo) + (c.size ? ` (${c.size})` : "");
 
 function renderCart() {
@@ -202,7 +270,11 @@ function renderCart() {
     <div><strong>${esc(nomeDoItem(c))}</strong><span>${esc(detalhe(o, c.size))}</span><span>${brl(precoDe(o, c.size))}</span></div>
     <button type="button" data-remove="${i}" aria-label="Remover ${esc(txt(o.titulo))}">×</button></li>`;
   }).join("");
+  const frete = freteDoCarrinho();
+  $("cartSub").textContent = brl(subtotalDoCarrinho());
+  $("cartFrete").textContent = frete === null ? "informe o CEP" : frete === 0 ? "grátis (arquivo digital)" : brl(frete);
   $("cartTotal").textContent = brl(totalDoCarrinho());
+  mostrarFrete();
   try { localStorage.setItem("carola-cart-v2", JSON.stringify(cart)); } catch (e) { }
   renderShop();
 }
@@ -238,9 +310,30 @@ $("cartClose").addEventListener("click", () => setDrawer(false));
 $("drawerOverlay").addEventListener("click", () => setDrawer(false));
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") setDrawer(false); });
 
+const freteLinha = () => {
+  const f = freteDoCarrinho();
+  if (f === 0) return "";
+  if (f === null) return "\nFrete: a combinar (CEP não informado)";
+  return `\nFrete ${SERVICOS[servico]}: ${brl(f)} (CEP ${destino.cep.replace(/(\d{5})(\d{3})/, "$1-$2")}, ${destino.cidade} - ${destino.uf})`;
+};
+
+$("cep").addEventListener("input", (e) => {
+  const d = e.target.value.replace(/\D/g, "").slice(0, 8);
+  e.target.value = d.length > 5 ? d.slice(0, 5) + "-" + d.slice(5) : d;
+});
+$("cep").addEventListener("keydown", (e) => { if (e.key === "Enter") calcularFrete(); });
+$("cepBtn").addEventListener("click", calcularFrete);
+$("freteOpcoes").addEventListener("change", (e) => {
+  if (!SERVICOS[e.target.value]) return;
+  servico = e.target.value;
+  try { localStorage.setItem("carola-servico", servico); } catch (err) { }
+  renderCart();
+});
+if (destino) $("cep").value = destino.cep.replace(/(\d{5})(\d{3})/, "$1-$2");
+
 $("checkout").addEventListener("click", () => {
   if (!cart.length) return;
-  const msg = `Olá, Carola! Quero comprar:\n${cart.map((c) => `• ${nomeDoItem(c)} — ${brl(precoDe(porId(c.id), c.size))}`).join("\n")}\nTotal: ${brl(totalDoCarrinho())}`;
+  const msg = `Olá, Carola! Quero comprar:\n${cart.map((c) => `• ${nomeDoItem(c)} — ${brl(precoDe(porId(c.id), c.size))}`).join("\n")}\nSubtotal: ${brl(subtotalDoCarrinho())}${freteLinha()}\nTotal: ${brl(totalDoCarrinho())}`;
   window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
 });
 
@@ -253,7 +346,7 @@ if ($("colecao")) {
     document.title = `${cat.titulo} — Carola Hoisel`;
     $("colEyebrow").textContent = cat.eyebrow;
     $("colTitle").textContent = cat.titulo;
-    $("colText").textContent = cat.texto;
+    $("colText").innerHTML = esc(cat.texto).replace(/\n/g, "<br>");
     $("colBack").href = `index.html#${key}`;
     if (cat.tipo === "loja") {
       $("colShop").hidden = false;
@@ -270,7 +363,9 @@ if ($("colecao")) {
         grid.appendChild(el);
       }
       $("colCta").hidden = false;
-      $("colCta").innerHTML = `<a class="pill pill-dark" data-wa="${esc(cat.wa)}">${esc(cat.cta)}</a>`;
+      $("colCta").innerHTML = cat.href
+        ? `<a class="pill pill-dark" href="${esc(cat.href)}">${esc(cat.cta)}</a>`
+        : `<a class="pill pill-dark" data-wa="${esc(cat.wa)}">${esc(cat.cta)}</a>`;
       bindWhatsApp($("colCta"));
     }
   }
@@ -295,6 +390,47 @@ document.addEventListener("click", (e) => {
   } else if (lightbox.contains(e.target) && e.target.tagName !== "IMG") closeLightbox();
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
+// ---- Simulador de valor de referência (orcamento.html) ----
+// Valores de teste. preço = tamanho × papel × cores, arredondado para múltiplos de 5.
+const ORC = {
+  papeis: [
+    { id: "p1", nome: "Papel 1", fator: 1 },
+    { id: "p2", nome: "Papel 2", fator: 1.15 },
+    { id: "p3", nome: "Papel 3", fator: 1.3 },
+  ],
+  tamanhos: { A5: 250, A4: 450, A3: 750, A2: 1500 },
+  cores: [
+    { id: "unica", nome: "Cor única", fator: 1 },
+    { id: "colorido", nome: "Colorido", fator: 1.4 },
+  ],
+};
+if ($("orcCfg")) {
+  const escolha = { papel: ORC.papeis[0].id, tamanho: "A4", cores: ORC.cores[0].id };
+  const grupos = [
+    { chave: "tamanho", titulo: "Tamanho", opcoes: Object.entries(TAMANHOS).map(([k, v]) => [k, `${k} · ${v}`]) },
+    { chave: "papel", titulo: "Tipo de papel", opcoes: ORC.papeis.map((p) => [p.id, p.nome]) },
+    { chave: "cores", titulo: "Cores", opcoes: ORC.cores.map((c) => [c.id, c.nome]) },
+  ];
+  const nomeDe = (chave) => grupos.find((g) => g.chave === chave).opcoes.find(([id]) => id === escolha[chave])[1];
+  function desenharOrc() {
+    $("orcGrupos").innerHTML = grupos.map((g) => `<div class="config-grupo"><p>${g.titulo}</p><div class="sizes" role="group" aria-label="${g.titulo}">${g.opcoes.map(([id, nome]) =>
+      `<button type="button" class="size${escolha[g.chave] === id ? " on" : ""}" data-opt="${g.chave}" data-val="${id}" aria-pressed="${escolha[g.chave] === id}">${nome}</button>`).join("")}</div></div>`).join("");
+    const papel = ORC.papeis.find((p) => p.id === escolha.papel);
+    const cor = ORC.cores.find((c) => c.id === escolha.cores);
+    const preco = Math.round((ORC.tamanhos[escolha.tamanho] * papel.fator * cor.fator) / 5) * 5;
+    $("orcPreco").textContent = brl(preco);
+    $("orcCta").dataset.wa = `Olá, Carola! Quero um orçamento de uma aquarela personalizada: ${nomeDe("papel")}, tamanho ${escolha.tamanho}, ${nomeDe("cores").toLowerCase()}. Valor de referência: ${brl(preco)}.`;
+    bindWhatsApp($("orcCta").parentElement);
+  }
+  $("orcGrupos").addEventListener("click", (e) => {
+    const d = e.target.dataset;
+    if (!d.opt) return;
+    escolha[d.opt] = d.val;
+    desenharOrc();
+  });
+  desenharOrc();
+}
+
 renderCart();
 observeReveals();
 

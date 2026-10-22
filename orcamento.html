@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aquarelas Personalizadas — Carola Hoisel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=32">
+</head>
+
+<body id="topo">
+
+  <header class="header header-solid">
+    <a href="index.html" class="brand">Carola Hoisel</a>
+    <div class="header-actions">
+      <button class="cart-btn" id="cartOpen" type="button" aria-label="Abrir carrinho">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+        </svg>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </button>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="colecao.html?c=fine-art">Aquarelas Fine Art</a></li>
+        <li><a href="orcamento.html">Aquarelas Personalizadas</a></li>
+        <li><a href="colecao.html?c=prints">Prints</a></li>
+        <li><a href="colecao.html?c=tecido">Arte no Tecido</a></li>
+        <li><a href="colecao.html?c=murais">Murais</a></li>
+        <li><a href="colecao.html?c=estampas">Estampas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="sec colecao" id="orcamento">
+    <div class="sec-text">
+      <a class="back" href="index.html#personalizadas">← Voltar</a>
+      <p class="eyebrow">sob medida</p>
+      <h2 class="siena">Aquarelas Personalizadas</h2>
+      <p>Uma aquarela criada especialmente para você — um retrato, um lugar, uma lembrança ou um presente. Veja como funciona, da primeira conversa até a entrega.</p>
+    </div>
+
+    <ol class="passos">
+      <li>
+        <span class="passo-n">1</span>
+        <div><h3>Conte a sua ideia</h3>
+          <p>Chame a Carola pelo WhatsApp e conte o que você imagina: o tema, para quem é, onde vai ficar. Se tiver fotos de referência, mande junto.</p></div>
+      </li>
+      <li>
+        <span class="passo-n">2</span>
+        <div><h3>Receba o orçamento</h3>
+          <p>Com a ideia em mãos, a Carola informa o valor e o prazo. O preço depende do tamanho (A5, A4, A3 ou A2) e da complexidade da obra.</p></div>
+      </li>
+      <li>
+        <span class="passo-n">3</span>
+        <div><h3>Aprove e confirme</h3>
+          <p>Se estiver tudo certo, vocês combinam a forma de pagamento e a obra entra na fila de criação.</p></div>
+      </li>
+      <li>
+        <span class="passo-n">4</span>
+        <div><h3>Acompanhe a criação</h3>
+          <p>Durante o processo, a Carola pode mandar fotos para você acompanhar como a aquarela está nascendo.</p></div>
+      </li>
+      <li>
+        <span class="passo-n">5</span>
+        <div><h3>Receba em casa</h3>
+          <p>A obra é embalada com cuidado e enviada para o seu endereço, por PAC ou SEDEX. Ela é feita em papel de algodão, assinada pela artista e não inclui moldura.</p></div>
+      </li>
+    </ol>
+
+    <div class="dicas">
+      <h3>O que ajuda no orçamento</h3>
+      <ul>
+        <li>O tema ou a cena que você imagina</li>
+        <li>Fotos de referência (pessoas, lugares, animais, cores)</li>
+        <li>O tamanho desejado</li>
+        <li>Para quando você precisa da obra</li>
+      </ul>
+    </div>
+
+    <div class="config" id="orcCfg">
+      <h3>Simule um valor de referência</h3>
+      <p class="config-sub">Escolha as características da obra para ter uma ideia do valor.</p>
+      <div id="orcGrupos"></div>
+      <div class="config-result">
+        <span>Valor de referência</span>
+        <strong id="orcPreco">R$ 0</strong>
+      </div>
+      <p class="config-nota">O valor final é confirmado pela Carola, de acordo com a complexidade da obra.</p>
+    </div>
+
+    <div class="sec-cta">
+      <a class="pill pill-dark" id="orcCta" data-wa="Olá, Carola! Li como funciona e quero pedir um orçamento de uma aquarela personalizada.">Pedir meu orçamento</a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="contact">
+      <a href="mailto:carola.hoisel@gmail.com">carola.hoisel@gmail.com</a>
+      <a href="https://wa.me/5571993021728" target="_blank" rel="noopener">+55 71 99302-1728</a>
+    </div>
+    <a class="insta" href="https://www.instagram.com/carolahoisel/" target="_blank" rel="noopener">@carolahoisel</a>
+    <p>© <span id="year"></span> Carola Hoisel</p>
+    <a class="credit" id="creditLink" href="#" target="_blank" rel="noopener"
+      aria-label="Site desenvolvido por litocode">
+      <span>Desenvolvido por</span>
+      <img src="litocode.png" alt="litocode">
+    </a>
+  </footer>
+
+  <!-- CARRINHO -->
+  <div class="drawer-overlay" id="drawerOverlay" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="Carrinho de compras" aria-hidden="true">
+    <div class="drawer-head">
+      <h3>Seu carrinho</h3>
+      <button type="button" class="drawer-close" id="cartClose" aria-label="Fechar carrinho">×</button>
+    </div>
+    <p class="drawer-empty" id="cartEmpty">Seu carrinho está vazio. Escolha uma obra para começar.</p>
+    <ul class="drawer-items" id="cartItems"></ul>
+    <div class="drawer-foot" id="cartFoot">
+      <div class="frete" id="freteBox">
+        <label for="cep">CEP para calcular o frete</label>
+        <div class="frete-row">
+          <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code">
+          <button type="button" class="size" id="cepBtn">Calcular</button>
+        </div>
+        <p class="frete-msg" id="freteMsg" aria-live="polite"></p>
+        <div class="frete-opcoes" id="freteOpcoes"></div>
+      </div>
+      <div class="drawer-line"><span>Subtotal</span><span id="cartSub">R$ 0</span></div>
+      <div class="drawer-line"><span>Frete</span><span id="cartFrete">—</span></div>
+      <div class="drawer-total"><span>Total</span><strong id="cartTotal">R$ 0</strong></div>
+      <button type="button" class="pill pill-siena drawer-checkout" id="checkout">Finalizar pelo WhatsApp</button>
+    </div>
+  </aside>
+
+  <script src="script.js?v=32"></script>
+</body>
+
+</html>

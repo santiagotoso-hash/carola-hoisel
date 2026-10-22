@@ -11,7 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=23">
+  <link rel="stylesheet" href="styles.css?v=32">
 </head>
 
 <body id="topo">
@@ -38,7 +38,7 @@
         <ul>
           <li><a href="#topo">Início</a></li>
           <li><a href="#fine-art">Aquarelas Fine Art</a></li>
-          <li><a href="#personalizadas">Aquarelas Personalizadas</a></li>
+          <li><a href="orcamento.html">Aquarelas Personalizadas</a></li>
           <li><a href="#prints">Prints</a></li>
           <li><a href="#tecido">Arte no Tecido</a></li>
           <li><a href="#murais">Murais</a></li>
@@ -76,13 +76,12 @@
     <div class="sec-text reveal">
       <p class="eyebrow">sob medida</p>
       <h2>Aquarelas Personalizadas</h2>
-      <p>Uma aquarela criada especialmente para você — um retrato, um lugar, uma lembrança ou um presente. Cada traço
-        carrega uma intenção única.</p>
+      <p>Uma aquarela criada especialmente para você — Meu estilo, seu tema, uma arte exclusiva realizada em
+        parceria.</br> Fotos meramente ilustrativas.</p>
     </div>
     <div class="grid-gallery grid-3" data-count="3" data-colors="#b07a6e,#c9a882,#8a9a86"></div>
-    <div class="sec-cta reveal"><a class="pill pill-dark"
-        data-wa="Olá, Carola! Quero encomendar uma aquarela personalizada.">Encomendar</a>
-      <a class="pill pill-outline" href="colecao.html?c=personalizadas">Ver mais</a>
+    <div class="sec-cta reveal"><a class="pill pill-dark" href="orcamento.html">Quero um orçamento</a>
+
     </div>
   </section>
 
@@ -175,13 +174,23 @@
     <p class="drawer-empty" id="cartEmpty">Seu carrinho está vazio. Escolha uma obra para começar.</p>
     <ul class="drawer-items" id="cartItems"></ul>
     <div class="drawer-foot" id="cartFoot">
+      <div class="frete" id="freteBox">
+        <label for="cep">CEP para calcular o frete</label>
+        <div class="frete-row">
+          <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code">
+          <button type="button" class="size" id="cepBtn">Calcular</button>
+        </div>
+        <p class="frete-msg" id="freteMsg" aria-live="polite"></p>
+        <div class="frete-opcoes" id="freteOpcoes"></div>
+      </div>
+      <div class="drawer-line"><span>Subtotal</span><span id="cartSub">R$ 0</span></div>
+      <div class="drawer-line"><span>Frete</span><span id="cartFrete">—</span></div>
       <div class="drawer-total"><span>Total</span><strong id="cartTotal">R$ 0</strong></div>
-      <p class="drawer-note">Frete e forma de pagamento combinados com a Carola pelo WhatsApp.</p>
       <button type="button" class="pill pill-siena drawer-checkout" id="checkout">Finalizar pelo WhatsApp</button>
     </div>
   </aside>
 
-  <script src="script.js?v=23"></script>
+  <script src="script.js?v=32"></script>
 </body>
 
 </html>
