@@ -7,8 +7,14 @@ document.getElementById("creditLink").href = `https://wa.me/${LITOCODE_WHATSAPP}
 // Fotos reais das seções de galeria (personalizadas, murais, estampas): coloque os arquivos numa pasta
 // (ex.: murais/) e liste aqui. Sem fotos, aparecem blocos de cor no lugar.
 const fotos = {
-  "personalizadas": ["AQUARELAS-PERSONALIZADAS/1.jpeg", "AQUARELAS-PERSONALIZADAS/2.jpeg", "AQUARELAS-PERSONALIZADAS/3.jpeg"],
+  "personalizadas": ["AQUARELAS-PERSONALIZADAS/1.jpeg", "AQUARELAS-PERSONALIZADAS/2.jpeg", "AQUARELAS-PERSONALIZADAS/3-sevilha.jpg"],
   // "murais": ["murais/1.jpg", "murais/2.jpg", "murais/3.jpg"],
+};
+
+// Parte da foto que fica visível na miniatura (as miniaturas cortam a foto). Padrão: centro.
+// Valores: "left", "right", "top", "bottom", "center" ou percentuais como "20% 50%".
+const focos = {
+  "AQUARELAS-PERSONALIZADAS/3-sevilha.jpg": "left center",
 };
 
 // Hero: para imagem, troque a div .hero-media por <img class="hero-media" src="hero.jpg" alt="">
@@ -22,7 +28,7 @@ const categorias = {
   },
   "personalizadas": {
     tipo: "galeria", eyebrow: "sob medida", titulo: "Aquarelas Personalizadas",
-    texto: "Uma aquarela criada especialmente para você — um retrato, um lugar, uma lembrança ou um presente. Cada traço carrega uma intenção única.",
+    texto: "Veja o passo a passo de como ter a aquarela dos seus sonhos.",
     cta: "Quero um orçamento", href: "orcamento.html",
     cores: ["#b07a6e", "#c9a882", "#8a9a86", "#e3d2c0"], total: 9
   },
@@ -65,7 +71,7 @@ document.querySelectorAll(".gallery, .grid-gallery[data-count]").forEach((g) => 
     const el = urls.length ? document.createElement("img") : document.createElement("div");
     el.className = "ph reveal";
     el.style.transitionDelay = i * 80 + "ms";
-    if (urls.length) { el.src = urls[i]; el.alt = ""; el.loading = "lazy"; }
+    if (urls.length) { el.src = urls[i]; el.alt = ""; el.loading = "lazy"; if (focos[urls[i]]) el.style.objectPosition = focos[urls[i]]; }
     else { const c = colors[i % colors.length]; el.style.setProperty("--c1", c); el.style.setProperty("--c2", c); }
     g.appendChild(el);
   }
@@ -113,12 +119,22 @@ const obras = [
   { id: 41, cat: "fine-art", titulo: "Água-viva", tecnica: "Aquarela", cor: "#5d6b7a", image: "AQUARELAS/agua-viva.jpg" },
   { id: 42, cat: "fine-art", titulo: "Xangô", tecnica: "Aquarela", cor: "#9c6244", image: "AQUARELAS/xango.jpeg" },
   { id: 43, cat: "fine-art", titulo: "Ibejis", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/ibejis.jpeg", extras: ["AQUARELAS/ibejis-mockup.jpg"] },
-  { id: 11, cat: "prints", titulo: "Print I", tecnica: "Arquivo digital", cor: "#b07a6e", image: "" },
-  { id: 12, cat: "prints", titulo: "Print II", tecnica: "Arquivo digital", cor: "#9c6244", image: "" },
-  { id: 13, cat: "prints", titulo: "Print III", tecnica: "Arquivo digital", cor: "#5d6b7a", image: "" },
-  { id: 14, cat: "prints", titulo: "Print IV", tecnica: "Arquivo digital", cor: "#c9a882", image: "" },
-  { id: 15, cat: "prints", titulo: "Print V", tecnica: "Arquivo digital", cor: "#7d9a8c", image: "" },
-  { id: 16, cat: "prints", titulo: "Print VI", tecnica: "Arquivo digital", cor: "#d9c4b2", image: "" },
+  { id: 11, cat: "prints", titulo: "Coração do Brasil", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/coracao-do-brasil.jpg" },
+  { id: 12, cat: "prints", titulo: "Polvo Azul", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/polvo-azul.jpg" },
+  { id: 13, cat: "prints", titulo: "Bahia Resistência", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/bahia-resistencia.jpg" },
+  { id: 14, cat: "prints", titulo: "Bananeira", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/bananeira.jpg" },
+  { id: 15, cat: "prints", titulo: "Banana Rosa", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/banana-rosa-agrupada.jpg" },
+  { id: 16, cat: "prints", titulo: "Bomfim", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/bomfim.jpg" },
+  { id: 17, cat: "prints", titulo: "Café para Despertar", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/cafe-para-despertar.jpg" },
+  { id: 18, cat: "prints", titulo: "Eagle Ray", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/eagle-ray.jpg" },
+  { id: 19, cat: "prints", titulo: "Jubarte", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/jubarte.jpg" },
+  { id: 20, cat: "prints", titulo: "Jubarte (fundo amarelo)", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/jubarte-fundo-amarelo.jpg" },
+  { id: 21, cat: "prints", titulo: "Márcio Freire", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/marcio-freire.jpg" },
+  { id: 22, cat: "prints", titulo: "Parede Agrupada", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/parede-agrupada.jpg" },
+  { id: 23, cat: "prints", titulo: "Solitude", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/solitude.jpg" },
+  { id: 24, cat: "prints", titulo: "Sup Yoga", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/sup-yoga.jpg" },
+  { id: 25, cat: "prints", titulo: "Surf Sunset Whale", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/surf-sunset-whale.jpg" },
+  { id: 26, cat: "prints", titulo: "Surfgirl", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 40, cor: "#d9c4b2", image: "PRINTS-WEB/surfgirl.jpg" },
   { id: 21, cat: "tecido", titulo: "Canga", tecnica: "Canga", medidas: "00 × 00 cm", preco: 180, cor: "#8a9a86", image: "" },
   { id: 22, cat: "tecido", titulo: "Lenço", tecnica: "Lenço de seda", medidas: "00 × 00 cm", preco: 220, cor: "#e3d2c0", image: "" },
   { id: 23, cat: "tecido", titulo: "Pareô", tecnica: "Pareô", medidas: "00 × 00 cm", preco: 160, cor: "#b07a6e", image: "" },
@@ -128,17 +144,16 @@ const obras = [
 ];
 
 
-// Tamanhos e preços: fine-art e prints são vendidos em A5, A4, A3 e A2 (o cliente escolhe no cartão da obra).
+// Tamanhos e preços: só a fine-art é vendida em A5, A4, A3 e A2 (o cliente escolhe no cartão da obra).
 // Os preços valem para a categoria inteira; para uma obra diferente, adicione  precos: { A5: 0, A4: 0, A3: 0, A2: 0 }  nela.
-// Itens sem tamanho (tecido) usam o campo preco.
+// Itens sem tamanho (prints e tecido) usam o campo preco. Prints são arquivos digitais: sem tamanho e sem frete.
 const TAMANHOS = { A5: "14,8 × 21 cm", A4: "21 × 29,7 cm", A3: "29,7 × 42 cm", A2: "42 × 59,4 cm" };
 const PRECOS = {
   "fine-art": { A5: 210, A4: 300, A3: 500, A2: 700 },
-  "prints": { A5: 30, A4: 45, A3: 70, A2: 110 },
 };
 const tabela = (o) => o.precos || PRECOS[o.cat] || null;
 const precoDe = (o, size) => (tabela(o) ? tabela(o)[size] : o.preco);
-const detalhe = (o, size) => `${o.tecnica} · ${tabela(o) ? TAMANHOS[size] : o.medidas}`;
+const detalhe = (o, size) => [o.tecnica, tabela(o) ? TAMANHOS[size] : o.medidas].filter(Boolean).join(" · ");
 const porId = (id) => obras.find((o) => o.id === id);
 
 const sel = {}; // tamanho escolhido em cada obra (padrão A4)
@@ -273,7 +288,7 @@ function renderCart() {
   }).join("");
   const frete = freteDoCarrinho();
   $("cartSub").textContent = brl(subtotalDoCarrinho());
-  $("cartFrete").textContent = frete === null ? "informe o CEP" : frete === 0 ? "grátis (arquivo digital)" : brl(frete);
+  $("cartFrete").textContent = frete === null ? "informe o CEP" : frete === 0 ? "sem frete (arquivo digital)" : brl(frete);
   $("cartTotal").textContent = brl(totalDoCarrinho());
   mostrarFrete();
   try { localStorage.setItem("carola-cart-v2", JSON.stringify(cart)); } catch (e) { }
@@ -359,7 +374,7 @@ if ($("colecao")) {
       for (let i = 0; i < (urls.length || cat.total); i++) {
         const el = urls.length ? document.createElement("img") : document.createElement("div");
         el.className = "ph reveal";
-        if (urls.length) { el.src = urls[i]; el.alt = ""; el.loading = "lazy"; }
+        if (urls.length) { el.src = urls[i]; el.alt = ""; el.loading = "lazy"; if (focos[urls[i]]) el.style.objectPosition = focos[urls[i]]; }
         else { const c = cat.cores[i % cat.cores.length]; el.style.setProperty("--c1", c); el.style.setProperty("--c2", c); }
         grid.appendChild(el);
       }
