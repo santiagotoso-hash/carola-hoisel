@@ -492,17 +492,23 @@ document.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
 // ---- Simulador de valor de referência (orcamento.html) ----
-// Valores de teste. preço = tamanho × papel × cores, arredondado para múltiplos de 5.
+// Valores da Carola (anotação de referência). Os acréscimos vão somando sobre o valor anterior:
+// tamanho → + acréscimo do papel → + acréscimo das cores. Ex.: A5 (270), +50% = 405, +10% = R$ 445,50.
 const ORC = {
+  tamanhos: { A5: 270, A4: 500, A3: 900, A2: 1500 },
   papeis: [
-    { id: "p1", nome: "Papel 1", fator: 1 },
-    { id: "p2", nome: "Papel 2", fator: 1.15 },
-    { id: "p3", nome: "Papel 3", fator: 1.3 },
+    { id: "p1", nome: "Papel algodão", extra: 0.5,
+      spec: "Papel feito em 100% algodão · 300 g/m² · cold press (grão fino) · livre de ácido · alta gramatura · indicado para aquarela, guache e técnicas úmidas. Maior resistência e durabilidade a longo prazo." },
+    { id: "p2", nome: "Papel misto", extra: 0.3,
+      spec: "Papel feito em 30% algodão + 70% fibras de cana-de-açúcar (bagaço) · 290 g/m², branco natural, de tonalidade levemente quente · superfície cold pressed (grão fino) · livre de ácido. Indicado para aquarela e técnicas úmidas." },
+    { id: "p3", nome: "Papel celulose", extra: 0.2,
+      spec: "Papel feito em 100% celulose de madeira, 300 g/m² · livre de ácido · sem aditivos ópticos branqueadores · tratamento antifúngico · em conformidade com a ISO 9706. Papel desenvolvido para aquarela, com superfície de grão fino." },
   ],
-  tamanhos: { A5: 250, A4: 450, A3: 750, A2: 1500 },
+  // papéis disponíveis em cada tamanho (p1 = algodão, p2 = misto, p3 = celulose)
+  disponivel: { A5: ["p1", "p2", "p3"], A4: ["p1", "p2", "p3"], A3: ["p1", "p3"], A2: ["p3"] },
   cores: [
-    { id: "unica", nome: "Cor única", fator: 1 },
-    { id: "colorido", nome: "Colorido", fator: 1.4 },
+    { id: "unica", nome: "1 cor", extra: 0.1 },
+    { id: "colorido", nome: "Colorido", extra: 0.2 },
   ],
 };
 if ($("orcCfg")) {
@@ -513,14 +519,20 @@ if ($("orcCfg")) {
     { chave: "cores", titulo: "Cores", opcoes: ORC.cores.map((c) => [c.id, c.nome]) },
   ];
   const nomeDe = (chave) => grupos.find((g) => g.chave === chave).opcoes.find(([id]) => id === escolha[chave])[1];
+  // um papel só pode ser escolhido nos tamanhos em que está disponível
+  const papelLivre = (id) => ORC.disponivel[escolha.tamanho].includes(id);
   function desenharOrc() {
-    $("orcGrupos").innerHTML = grupos.map((g) => `<div class="config-grupo"><p>${g.titulo}</p><div class="sizes" role="group" aria-label="${g.titulo}">${g.opcoes.map(([id, nome]) =>
-      `<button type="button" class="size${escolha[g.chave] === id ? " on" : ""}" data-opt="${g.chave}" data-val="${id}" aria-pressed="${escolha[g.chave] === id}">${nome}</button>`).join("")}</div></div>`).join("");
+    if (!papelLivre(escolha.papel)) escolha.papel = ORC.disponivel[escolha.tamanho][0];
+    $("orcGrupos").innerHTML = grupos.map((g) => `<div class="config-grupo"><p>${g.titulo}</p><div class="sizes" role="group" aria-label="${g.titulo}">${g.opcoes.map(([id, nome]) => {
+      const off = g.chave === "papel" && !papelLivre(id);
+      return `<button type="button" class="size${escolha[g.chave] === id ? " on" : ""}" data-opt="${g.chave}" data-val="${id}" aria-pressed="${escolha[g.chave] === id}" ${off ? 'disabled title="Indisponível neste tamanho"' : ""}>${nome}</button>`;
+    }).join("")}</div>${g.chave === "papel" ? `<p class="papel-spec"><strong>${nomeDe("papel")}:</strong> ${ORC.papeis.find((p) => p.id === escolha.papel).spec}</p>` : ""}</div>`).join("");
     const papel = ORC.papeis.find((p) => p.id === escolha.papel);
     const cor = ORC.cores.find((c) => c.id === escolha.cores);
-    const preco = Math.round((ORC.tamanhos[escolha.tamanho] * papel.fator * cor.fator) / 5) * 5;
-    $("orcPreco").textContent = brl(preco);
-    $("orcCta").dataset.wa = `Olá, Carola! Quero um orçamento de uma aquarela personalizada: ${nomeDe("papel")}, tamanho ${escolha.tamanho}, ${nomeDe("cores").toLowerCase()}. Valor de referência: ${brl(preco)}.`;
+    const preco = Math.round(ORC.tamanhos[escolha.tamanho] * (1 + papel.extra) * (1 + cor.extra) * 100) / 100;
+    const precoTexto = "R$ " + preco.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    $("orcPreco").textContent = precoTexto;
+    $("orcCta").dataset.wa = `Olá, Carola! Quero um orçamento de uma aquarela personalizada: ${nomeDe("papel")}, tamanho ${escolha.tamanho}, ${nomeDe("cores").toLowerCase()}. Valor de referência: ${precoTexto}.`;
     bindWhatsApp($("orcCta").parentElement);
   }
   $("orcGrupos").addEventListener("click", (e) => {
