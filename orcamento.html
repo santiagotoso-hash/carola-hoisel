@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Nunito:wght@300;400;600&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=45">
+  <link rel="stylesheet" href="styles.css?v=50">
 </head>
 
 <body id="topo">
@@ -140,14 +140,32 @@
         <p class="frete-msg" id="freteMsg" aria-live="polite"></p>
         <div class="frete-opcoes" id="freteOpcoes"></div>
       </div>
+      <div class="email-box" id="emailBox" hidden>
+        <label for="emailCliente">E-mail para receber o arquivo dos prints</label>
+        <input id="emailCliente" type="email" inputmode="email" autocomplete="email" placeholder="seuemail@exemplo.com">
+        <p class="frete-msg" id="emailMsg" aria-live="polite"></p>
+      </div>
       <div class="drawer-line"><span>Subtotal</span><span id="cartSub">R$ 0</span></div>
       <div class="drawer-line"><span>Frete</span><span id="cartFrete">—</span></div>
       <div class="drawer-total"><span>Total</span><strong id="cartTotal">R$ 0</strong></div>
-      <button type="button" class="pill pill-siena drawer-checkout" id="checkout">Finalizar pelo WhatsApp</button>
+      <button type="button" class="pill pill-siena drawer-checkout" id="checkout">Pague no Pix</button>
+    </div>
+    <div class="pagamento" id="pagamento" hidden>
+      <button type="button" class="pag-voltar" id="pagVoltar">← Voltar ao carrinho</button>
+      <h3>Pagamento por Pix</h3>
+      <p class="pag-total">Valor a pagar <strong id="pagTotal"></strong></p>
+      <div class="pag-qr" id="pagQr" aria-label="QR Code do Pix"></div>
+      <p class="pag-sub">Ou use o Pix copia e cola</p>
+      <textarea id="pagCodigo" rows="4" readonly></textarea>
+      <button type="button" class="pill pill-dark" id="pagCopiar">Copiar código Pix</button>
+      <p class="pag-sub" id="pagEmail" hidden></p>
+      <p class="pag-sub">Depois de pagar, envie o comprovante para a Carola. Pedido <strong id="pagPedido"></strong></p>
+      <a class="pill pill-siena" id="pagWhats" target="_blank" rel="noopener">Enviar comprovante pelo WhatsApp</a>
     </div>
   </aside>
 
-  <script src="script.js?v=45"></script>
+  <script src="qrcode.js"></script>
+  <script src="script.js?v=50"></script>
 </body>
 
 </html>

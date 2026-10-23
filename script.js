@@ -230,6 +230,11 @@ try { destino = JSON.parse(localStorage.getItem("carola-destino")); } catch (e) 
 let servico = "pac";
 try { if (SERVICOS[localStorage.getItem("carola-servico")]) servico = localStorage.getItem("carola-servico"); } catch (e) { }
 
+const temPrints = () => cart.some((c) => porId(c.id).cat === "prints");
+let emailCliente = "";
+try { emailCliente = localStorage.getItem("carola-email") || ""; } catch (e) {}
+const emailValido = (v) => /^[^ @]+@[^ @]+[.][^ @]{2,}$/.test(v.trim());
+
 const itensFisicos = () => cart.filter((c) => porId(c.id).cat !== "prints").length;
 const freteValor = (tipo) => {
   const f = FRETE[REGIAO[destino.uf]];
@@ -291,6 +296,7 @@ function renderCart() {
   $("cartFrete").textContent = frete === null ? "informe o CEP" : frete === 0 ? "sem frete (arquivo digital)" : brl(frete);
   $("cartTotal").textContent = brl(totalDoCarrinho());
   mostrarFrete();
+  $("emailBox").hidden = !temPrints();
   try { localStorage.setItem("carola-cart-v2", JSON.stringify(cart)); } catch (e) { }
   renderShop();
 }
@@ -347,10 +353,89 @@ $("freteOpcoes").addEventListener("change", (e) => {
 });
 if (destino) $("cep").value = destino.cep.replace(/(\d{5})(\d{3})/, "$1-$2");
 
+// ---- Pagamento por Pix (QR Code e "copia e cola") ----
+// Preencha a chave Pix da Carola (CPF/CNPJ só com números, e-mail, telefone no formato +5571999999999 ou chave aleatória).
+// Enquanto a chave estiver vazia, "Finalizar" continua enviando o pedido pelo WhatsApp.
+const PIX = {
+  chave: "97464031504", // CPF
+  nome: "Carola Hoisel",    // nome do recebedor (até 25 letras)
+  cidade: "Praia do Forte", // cidade do recebedor (até 15 letras)
+};
+
+const semAcento = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+const emv = (id, valor) => id + String(valor.length).padStart(2, "0") + valor;
+function crc16(texto) { // CRC-16/CCITT-FALSE, exigido pelo padrão do Pix
+  let crc = 0xffff;
+  for (let i = 0; i < texto.length; i++) {
+    crc ^= texto.charCodeAt(i) << 8;
+    for (let b = 0; b < 8; b++) crc = (crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1) & 0xffff;
+  }
+  return crc.toString(16).toUpperCase().padStart(4, "0");
+}
+function pixPayload(valor, txid) {
+  const conta = emv("00", "br.gov.bcb.pix") + emv("01", PIX.chave.trim());
+  const base = emv("00", "01") + emv("26", conta) + emv("52", "0000") + emv("53", "986") + emv("54", valor.toFixed(2)) +
+    emv("58", "BR") + emv("59", semAcento(PIX.nome).slice(0, 25)) + emv("60", semAcento(PIX.cidade).slice(0, 15)) +
+    emv("62", emv("05", txid)) + "6304";
+  return base + crc16(base);
+}
+
+function resumoDoPedido(pedido) {
+  return `Olá, Carola! Pedido ${pedido}:\n${cart.map((c) => `• ${nomeDoItem(c)} — ${brl(precoDe(porId(c.id), c.size))}`).join("\n")}\nSubtotal: ${brl(subtotalDoCarrinho())}${freteLinha()}${temPrints() ? `\nE-mail para receber o arquivo: ${emailCliente.trim()}` : ""}\nTotal: ${brl(totalDoCarrinho())}`;
+}
+const linkWhats = (msg) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+
+function abrirPagamento() {
+  const pedido = "CH" + Date.now().toString(36).toUpperCase();
+  const total = totalDoCarrinho();
+  const codigo = pixPayload(total, pedido);
+  const qr = qrcode(0, "M");
+  qr.addData(codigo);
+  qr.make();
+  $("pagQr").innerHTML = qr.createSvgTag({ scalable: true, margin: 2 });
+  $("pagTotal").textContent = brl(total);
+  $("pagPedido").textContent = pedido;
+  $("pagCodigo").value = codigo;
+  $("pagEmail").hidden = !temPrints();
+  $("pagEmail").textContent = `O arquivo dos prints será enviado para ${emailCliente.trim()} depois da confirmação do pagamento.`;
+  $("pagWhats").href = linkWhats(resumoDoPedido(pedido) + "\n\nPagamento feito por Pix. Segue o comprovante:");
+  $("drawer").classList.add("pagando");
+  $("pagamento").hidden = false;
+  $("drawer").scrollTop = 0;
+}
+function fecharPagamento() {
+  $("drawer").classList.remove("pagando");
+  $("pagamento").hidden = true;
+}
+
 $("checkout").addEventListener("click", () => {
   if (!cart.length) return;
-  const msg = `Olá, Carola! Quero comprar:\n${cart.map((c) => `• ${nomeDoItem(c)} — ${brl(precoDe(porId(c.id), c.size))}`).join("\n")}\nSubtotal: ${brl(subtotalDoCarrinho())}${freteLinha()}\nTotal: ${brl(totalDoCarrinho())}`;
-  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+  if (itensFisicos() && !destino) {
+    $("freteMsg").textContent = "Informe o CEP e escolha PAC ou SEDEX para continuar.";
+    $("cep").focus();
+    return;
+  }
+  if (temPrints() && !emailValido(emailCliente)) {
+    $("emailMsg").textContent = "Digite um e-mail válido para receber o arquivo.";
+    $("emailCliente").focus();
+    return;
+  }
+  if (!PIX.chave.trim()) { window.open(linkWhats(resumoDoPedido("novo")), "_blank", "noopener"); return; }
+  abrirPagamento();
+});
+$("emailCliente").value = emailCliente;
+$("emailCliente").addEventListener("input", (e) => {
+  emailCliente = e.target.value;
+  $("emailMsg").textContent = "";
+  try { localStorage.setItem("carola-email", emailCliente); } catch (err) {}
+});
+$("pagVoltar").addEventListener("click", fecharPagamento);
+$("pagCopiar").addEventListener("click", async () => {
+  const btn = $("pagCopiar");
+  try { await navigator.clipboard.writeText($("pagCodigo").value); }
+  catch (e) { $("pagCodigo").select(); document.execCommand("copy"); }
+  btn.textContent = "Código copiado!";
+  setTimeout(() => { btn.textContent = "Copiar código Pix"; }, 2500);
 });
 
 // ---- Página "Ver mais" (colecao.html) ----
