@@ -507,7 +507,7 @@ const ORC = {
   // papéis disponíveis em cada tamanho (p1 = algodão, p2 = misto, p3 = celulose)
   disponivel: { A5: ["p1", "p2", "p3"], A4: ["p1", "p2", "p3"], A3: ["p1", "p3"], A2: ["p3"] },
   cores: [
-    { id: "unica", nome: "1 cor", extra: 0.1 },
+    { id: "unica", nome: "Monocromático", extra: 0.1 },
     { id: "colorido", nome: "Colorido", extra: 0.2 },
   ],
 };
