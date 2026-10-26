@@ -4,7 +4,8 @@
   --peach: #d9c4b2;
   --siena: #9c6244;
   --botao: var(--siena); /* cor dos botões escuros e das opções selecionadas */
-  --terra: #3d1f15;
+  --terra: #5a3524; /* cor dos textos: marrom escuro (antes era quase preto) */
+  --cabecalho: #8c6a4f; /* marrom do cabeçalho das páginas internas, igual ao da página principal */
   --dark: #241610;
   --display: "Cormorant Garamond", Georgia, serif;
   --sans: "Nunito", system-ui, sans-serif;
@@ -155,7 +156,7 @@ button.pill-line { border: 1px solid rgba(61,31,21,.35); }
 @media (min-width: 900px) { .shop { grid-template-columns: repeat(3, 1fr); padding: 0 48px; } }
 
 /* página de coleção e "ver mais" */
-.header-solid { position: relative; background: var(--dark); color: #fff; padding-bottom: 8px; }
+.header-solid { position: relative; background: var(--cabecalho); color: #fff; padding-bottom: 8px; }
 .header-solid .menu { margin-bottom: 0; }
 .colecao { background: var(--creme); min-height: 70vh; padding-top: 48px; }
 .back { display: inline-block; margin-bottom: 24px; font-size: .75rem; text-transform: uppercase; letter-spacing: .2em; opacity: .6; }
@@ -310,3 +311,5 @@ img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -we
 .sobre-papel h3 { font-family: var(--display); font-weight: 500; font-size: 1.8rem; line-height: 1.1; margin-bottom: 8px; }
 .sobre-papel p { font-size: .92rem; line-height: 1.65; opacity: .85; }
 @media (min-width: 800px) { .sobre-papel { padding: 0 48px; } }
+
+.about-photo { object-fit: cover; object-position: 50% 55%; display: block; }
