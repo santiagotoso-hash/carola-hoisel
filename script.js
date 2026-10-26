@@ -117,7 +117,7 @@ const obras = [
   { id: 39, cat: "fine-art", titulo: "Peixe-voador", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/peixe-voador.jpg" },
   { id: 40, cat: "fine-art", titulo: "Verão Nórdico", tecnica: "Aquarela", cor: "#d9c4b2", image: "AQUARELAS/verao-nordico.jpg" },
   { id: 41, cat: "fine-art", titulo: "Água-viva", tecnica: "Aquarela", cor: "#5d6b7a", image: "AQUARELAS/agua-viva.jpg" },
-  { id: 42, cat: "fine-art", titulo: "Xangô", tecnica: "Aquarela", cor: "#9c6244", image: "AQUARELAS/xango.jpeg" },
+  { id: 42, cat: "fine-art", titulo: "Xangô", tecnica: "Aquarela", cor: "#9c6244", image: "AQUARELAS/xango.jpg" },
   { id: 43, cat: "fine-art", titulo: "Ibejis", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/ibejis.jpeg", extras: ["AQUARELAS/ibejis-mockup.jpg"] },
   { id: 11, cat: "prints", titulo: "Coração do Brasil", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/coracao-do-brasil.jpg" },
   { id: 12, cat: "prints", titulo: "Polvo Azul", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/polvo-azul.jpg" },
