@@ -8,6 +8,7 @@ document.getElementById("creditLink").href = `https://wa.me/${LITOCODE_WHATSAPP}
 // (ex.: murais/) e liste aqui. Sem fotos, aparecem blocos de cor no lugar.
 const fotos = {
   "personalizadas": ["AQUARELAS-PERSONALIZADAS/1.jpeg", "AQUARELAS-PERSONALIZADAS/2.jpeg", "AQUARELAS-PERSONALIZADAS/3-sevilha.jpg"],
+  "estampas": ["ESTAMPAS-WEB/iemanja.jpg", "ESTAMPAS-WEB/maragogipinho.jpg", "ESTAMPAS-WEB/cordel.jpg"],
   // "murais": ["murais/1.jpg", "murais/2.jpg", "murais/3.jpg"],
 };
 
@@ -129,12 +130,13 @@ const obras = [
   { id: 18, cat: "prints", titulo: "Eagle Ray", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/eagle-ray.jpg?v=2" },
   { id: 19, cat: "prints", titulo: "Jubarte", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/jubarte.jpg?v=2" },
   { id: 20, cat: "prints", titulo: "Jubarte (fundo amarelo)", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/jubarte-fundo-amarelo.jpg?v=2" },
-  { id: 21, cat: "prints", titulo: "Márcio Freire", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/marcio-freire.jpg?v=2" },
+  { id: 21, cat: "prints", titulo: "Márcio Freire", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/marcio-freire.jpg?v=3" },
   { id: 22, cat: "prints", titulo: "Mermaid", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/parede-agrupada.jpg?v=2" },
   { id: 23, cat: "prints", titulo: "Solitude", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/solitude.jpg?v=2" },
   { id: 24, cat: "prints", titulo: "Sup Yoga", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/sup-yoga.jpg?v=2" },
   { id: 25, cat: "prints", titulo: "Surf Sunset Whale", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/surf-sunset-whale.jpg?v=2" },
   { id: 26, cat: "prints", titulo: "Surfgirl", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/surfgirl.jpg?v=2" },
+  { id: 27, cat: "prints", titulo: "Axé", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/axe.jpg?v=1" },
   { id: 21, cat: "tecido", titulo: "Canga", tecnica: "Canga", medidas: "00 × 00 cm", preco: 180, cor: "#8a9a86", image: "" },
   { id: 22, cat: "tecido", titulo: "Lenço", tecnica: "Lenço de seda", medidas: "00 × 00 cm", preco: 220, cor: "#e3d2c0", image: "" },
   { id: 23, cat: "tecido", titulo: "Pareô", tecnica: "Pareô", medidas: "00 × 00 cm", preco: 160, cor: "#b07a6e", image: "" },
