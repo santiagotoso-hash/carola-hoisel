@@ -9,3 +9,6 @@ PERFIL PROFI/
 
 # originais das estampas (alta resolução): publicar só as versões leves de ESTAMPAS-WEB
 ESTAMPAS/
+
+# cópia de segurança das imagens antes de reduzir para 800 px (não publicar)
+_backup-imagens/

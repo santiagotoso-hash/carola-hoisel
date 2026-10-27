@@ -7,7 +7,7 @@ document.getElementById("creditLink").href = `https://wa.me/${LITOCODE_WHATSAPP}
 // Fotos reais das seções de galeria (personalizadas, murais, estampas): coloque os arquivos numa pasta
 // (ex.: murais/) e liste aqui. Sem fotos, aparecem blocos de cor no lugar.
 const fotos = {
-  "personalizadas": ["AQUARELAS-PERSONALIZADAS/1.jpeg", "AQUARELAS-PERSONALIZADAS/2.jpeg", "AQUARELAS-PERSONALIZADAS/3-sevilha.jpg"],
+  "personalizadas": ["AQUARELAS-PERSONALIZADAS/1.jpeg?v=2", "AQUARELAS-PERSONALIZADAS/2.jpeg?v=2", "AQUARELAS-PERSONALIZADAS/3-sevilha.jpg?v=2"],
   "estampas": ["ESTAMPAS-WEB/iemanja.jpg", "ESTAMPAS-WEB/maragogipinho.jpg", "ESTAMPAS-WEB/cordel.jpg"],
   // "murais": ["murais/1.jpg", "murais/2.jpg", "murais/3.jpg"],
 };
@@ -15,7 +15,7 @@ const fotos = {
 // Parte da foto que fica visível na miniatura (as miniaturas cortam a foto). Padrão: centro.
 // Valores: "left", "right", "top", "bottom", "center" ou percentuais como "20% 50%".
 const focos = {
-  "AQUARELAS-PERSONALIZADAS/3-sevilha.jpg": "left center",
+  "AQUARELAS-PERSONALIZADAS/3-sevilha.jpg?v=2": "left center",
 };
 
 // Hero: para imagem, troque a div .hero-media por <img class="hero-media" src="hero.jpg" alt="">
@@ -107,19 +107,19 @@ const observeReveals = () => document.querySelectorAll(".reveal:not(.in)").forEa
 // cat: "fine-art" | "prints" | "tecido". Os ids não podem se repetir.
 // A página inicial mostra só os 3 primeiros de cada categoria; "Ver mais" mostra todos.
 const obras = [
-  { id: 31, cat: "fine-art", titulo: "Cajueiro", tecnica: "Aquarela", cor: "#8a9a86", image: "AQUARELAS/cajueiro.jpg" },
-  { id: 34, cat: "fine-art", titulo: "Carpa Dourada", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/carpa-dourada.jpg", extras: ["AQUARELAS/carpa-dourada-mockup.jpg"] },
-  { id: 35, cat: "fine-art", titulo: "Das profundezas\npra Luz", tecnica: "Aquarela", cor: "#5d6b7a", image: "AQUARELAS/das-profundezas-pra-luz.jpg" },
-  { id: 32, cat: "fine-art", titulo: "A onda dela", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/a-onda-dela.jpg" },
-  { id: 33, cat: "fine-art", titulo: "Caribbean Blue", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/caribbean-blue.jpg" },
-  { id: 36, cat: "fine-art", titulo: "Meninas do Mar", tecnica: "Aquarela", cor: "#b07a6e", image: "AQUARELAS/meninas-do-mar.jpg" },
-  { id: 37, cat: "fine-art", titulo: "Onça Pintada", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/onca-pintada.jpg" },
-  { id: 38, cat: "fine-art", titulo: "Peixe papagaio", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/peixe-papagaio.png", extras: ["AQUARELAS/peixe-papagaio-mockup.jpg"] },
-  { id: 39, cat: "fine-art", titulo: "Peixe-voador", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/peixe-voador.jpg" },
-  { id: 40, cat: "fine-art", titulo: "Verão Nórdico", tecnica: "Aquarela", cor: "#d9c4b2", image: "AQUARELAS/verao-nordico.jpg" },
-  { id: 41, cat: "fine-art", titulo: "Água-viva", tecnica: "Aquarela", cor: "#5d6b7a", image: "AQUARELAS/agua-viva.jpg" },
-  { id: 42, cat: "fine-art", titulo: "Xangô", tecnica: "Aquarela", cor: "#9c6244", image: "AQUARELAS/xango.jpg" },
-  { id: 43, cat: "fine-art", titulo: "Ibejis", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/ibejis.jpeg", extras: ["AQUARELAS/ibejis-mockup.jpg"] },
+  { id: 31, cat: "fine-art", titulo: "Cajueiro", tecnica: "Aquarela", cor: "#8a9a86", image: "AQUARELAS/cajueiro.jpg?v=2" },
+  { id: 34, cat: "fine-art", titulo: "Carpa Dourada", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/carpa-dourada.jpg?v=2", extras: ["AQUARELAS/carpa-dourada-mockup.jpg?v=2"] },
+  { id: 35, cat: "fine-art", titulo: "Das profundezas\npra Luz", tecnica: "Aquarela", cor: "#5d6b7a", image: "AQUARELAS/das-profundezas-pra-luz.jpg?v=2" },
+  { id: 32, cat: "fine-art", titulo: "A onda dela", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/a-onda-dela.jpg?v=2" },
+  { id: 33, cat: "fine-art", titulo: "Caribbean Blue", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/caribbean-blue.jpg?v=2" },
+  { id: 36, cat: "fine-art", titulo: "Meninas do Mar", tecnica: "Aquarela", cor: "#b07a6e", image: "AQUARELAS/meninas-do-mar.jpg?v=2" },
+  { id: 37, cat: "fine-art", titulo: "Onça Pintada", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/onca-pintada.jpg?v=2" },
+  { id: 38, cat: "fine-art", titulo: "Peixe papagaio", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/peixe-papagaio.png?v=2", extras: ["AQUARELAS/peixe-papagaio-mockup.jpg?v=2"] },
+  { id: 39, cat: "fine-art", titulo: "Peixe-voador", tecnica: "Aquarela", cor: "#7d9a8c", image: "AQUARELAS/peixe-voador.jpg?v=2" },
+  { id: 40, cat: "fine-art", titulo: "Verão Nórdico", tecnica: "Aquarela", cor: "#d9c4b2", image: "AQUARELAS/verao-nordico.jpg?v=2" },
+  { id: 41, cat: "fine-art", titulo: "Água-viva", tecnica: "Aquarela", cor: "#5d6b7a", image: "AQUARELAS/agua-viva.jpg?v=2" },
+  { id: 42, cat: "fine-art", titulo: "Xangô", tecnica: "Aquarela", cor: "#9c6244", image: "AQUARELAS/xango.jpg?v=2" },
+  { id: 43, cat: "fine-art", titulo: "Ibejis", tecnica: "Aquarela", cor: "#c9a882", image: "AQUARELAS/ibejis.jpeg?v=2", extras: ["AQUARELAS/ibejis-mockup.jpg?v=2"] },
   { id: 11, cat: "prints", titulo: "Coração do Brasil", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/coracao-do-brasil.jpg?v=2" },
   { id: 12, cat: "prints", titulo: "Polvo Azul", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/polvo-azul.jpg?v=2" },
   { id: 13, cat: "prints", titulo: "Bahia Resistência", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/bahia-resistencia.jpg?v=2" },
