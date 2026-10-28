@@ -16,8 +16,8 @@ const fotos = {
 // número do quadrado (0 = primeiro). Cada item é o caminho de uma foto ou { video, poster } para um vídeo.
 const carrosseis = {
   "murais": [
-    { alt: "Mural", itens: ["MURAIS-WEB/mural-0.jpg", "MURAIS-WEB/mural-1.jpg", "MURAIS-WEB/mural-2.jpg", "MURAIS-WEB/mural-3.jpg"] },
-    { alt: "Mural", itens: ["MURAIS-WEB/mural-4.jpg", { video: "MURAIS-WEB/mural-video.mp4", poster: "MURAIS-WEB/mural-video-poster.jpg" }] },
+    { alt: "Mural", itens: ["MURAIS-WEB/mural-2.jpg", "MURAIS-WEB/mural-0.jpg", "MURAIS-WEB/mural-1.jpg", "MURAIS-WEB/mural-3.jpg"] },
+    { alt: "Mural", itens: ["MURAIS-WEB/mural-4.jpg", { video: "MURAIS-WEB/mural-video.mp4", poster: "MURAIS-WEB/mural-video-poster.jpg" }, "MURAIS-WEB/mural-5.jpg"] },
   ],
 };
 
