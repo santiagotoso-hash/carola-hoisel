@@ -12,6 +12,15 @@ const fotos = {
   // "murais": ["murais/1.jpg", "murais/2.jpg", "murais/3.jpg"],
 };
 
+// Carrosséis: quadrados de uma seção com várias fotos que deslizam (setas, dedo ou mouse). A posição na lista é o
+// número do quadrado (0 = primeiro). Cada item é o caminho de uma foto ou { video, poster } para um vídeo.
+const carrosseis = {
+  "murais": [
+    { alt: "Mural", itens: ["MURAIS-WEB/mural-0.jpg", "MURAIS-WEB/mural-1.jpg", "MURAIS-WEB/mural-2.jpg", "MURAIS-WEB/mural-3.jpg"] },
+    { alt: "Mural", itens: ["MURAIS-WEB/mural-4.jpg", { video: "MURAIS-WEB/mural-video.mp4", poster: "MURAIS-WEB/mural-video-poster.jpg" }] },
+  ],
+};
+
 // Parte da foto que fica visível na miniatura (as miniaturas cortam a foto). Padrão: centro.
 // Valores: "left", "right", "top", "bottom", "center" ou percentuais como "20% 50%".
 const focos = {
@@ -69,6 +78,15 @@ document.querySelectorAll(".gallery, .grid-gallery[data-count]").forEach((g) => 
   if (g.dataset.w) g.style.setProperty("--w", g.dataset.w + "vw");
   if (g.dataset.h) g.style.setProperty("--h", g.dataset.h + "px");
   for (let i = 0; i < count; i++) {
+    const c = (carrosseis[section] || [])[i];
+    if (c) {
+      const caixa = document.createElement("div");
+      caixa.innerHTML = sliderHtml(c.itens, (n) => c.alt + (n ? " — foto " + (n + 1) : ""));
+      const car = caixa.firstElementChild;
+      car.classList.add("reveal");
+      g.appendChild(car);
+      continue;
+    }
     const el = urls.length ? document.createElement("img") : document.createElement("div");
     el.className = "ph reveal";
     el.style.transitionDelay = i * 80 + "ms";
@@ -170,8 +188,12 @@ const media = (o, cls) => o.image
 
 // Obras com `extras` (outras fotos, como o mockup) ganham um carrossel: deslizar para o lado ou usar as setas.
 function slider(o) {
-  const fotos = [o.image, ...o.extras];
-  const imgs = fotos.map((src, i) => `<img class="product-img" src="${esc(src)}" alt="${esc(txt(o.titulo))}${i ? " — mockup" : ""}" loading="lazy">`).join("");
+  return sliderHtml([o.image, ...o.extras], (i) => txt(o.titulo) + (i ? " — mockup" : ""));
+}
+function sliderHtml(fotos, altDe) {
+  const imgs = fotos.map((src, i) => typeof src === "string"
+    ? `<img class="product-img" src="${esc(src)}" alt="${esc(altDe(i))}" loading="lazy">`
+    : `<video class="product-img" src="${esc(src.video)}" poster="${esc(src.poster || "")}" aria-label="${esc(altDe(i))}" muted loop playsinline preload="metadata" disablepictureinpicture controlslist="nodownload"></video>`).join("");
   return `<div class="slider"><div class="slides">${imgs}</div>
     <button type="button" class="slide-btn prev" data-slide="-1" aria-label="Foto anterior">‹</button>
     <button type="button" class="slide-btn next" data-slide="1" aria-label="Próxima foto">›</button>
@@ -181,6 +203,7 @@ document.addEventListener("scroll", (e) => {
   if (!e.target.classList || !e.target.classList.contains("slides")) return;
   const i = Math.round(e.target.scrollLeft / e.target.clientWidth);
   e.target.parentElement.querySelectorAll(".dots span").forEach((d, n) => d.classList.toggle("on", n === i));
+  [...e.target.children].forEach((el, n) => { if (el.tagName === "VIDEO") { if (n === i) el.play().catch(() => {}); else el.pause(); } });
 }, true);
 
 function renderShop() {
@@ -552,5 +575,5 @@ observeReveals();
 $("year").textContent = new Date().getFullYear();
 
 // ---- Dificulta salvar ou copiar imagens (botão direito e arrastar) ----
-document.addEventListener("contextmenu", (e) => { if (e.target.closest("img")) e.preventDefault(); });
+document.addEventListener("contextmenu", (e) => { if (e.target.closest("img, video")) e.preventDefault(); });
 document.addEventListener("dragstart", (e) => { if (e.target.closest("img")) e.preventDefault(); });

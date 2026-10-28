@@ -313,3 +313,8 @@ img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -we
 @media (min-width: 800px) { .sobre-papel { padding: 0 48px; } }
 
 .about-photo { object-fit: cover; object-position: 50% 55%; display: block; }
+
+/* carrossel dentro da grade de imagens (primeiro quadrado de Murais) */
+.grid-gallery > .slider { aspect-ratio: 4/5; border-radius: 16px; overflow: hidden; }
+.grid-gallery > .slider .slides, .grid-gallery > .slider .product-img { height: 100%; }
+@media (hover: hover) { .grid-gallery > .slider:hover .slides { transform: none; } }

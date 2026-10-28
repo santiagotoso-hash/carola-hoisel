@@ -12,3 +12,6 @@ ESTAMPAS/
 
 # cópia de segurança das imagens antes de reduzir para 800 px (não publicar)
 _backup-imagens/
+
+# originais dos murais (alta resolução): publicar só as versões leves de MURAIS-WEB
+MURAIS/
