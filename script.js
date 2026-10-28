@@ -18,6 +18,7 @@ const carrosseis = {
   "murais": [
     { alt: "Mural", itens: ["MURAIS-WEB/mural-2.jpg", "MURAIS-WEB/mural-0.jpg", "MURAIS-WEB/mural-1.jpg", "MURAIS-WEB/mural-3.jpg"] },
     { alt: "Mural", itens: ["MURAIS-WEB/mural-4.jpg", { video: "MURAIS-WEB/mural-video.mp4", poster: "MURAIS-WEB/mural-video-poster.jpg" }, "MURAIS-WEB/mural-5.jpg"] },
+    { alt: "Mural", itens: ["MURAIS-WEB/mural-6.jpg", "MURAIS-WEB/mural-7.jpg", "MURAIS-WEB/mural-8.jpg"] },
   ],
 };
 
