@@ -51,18 +51,6 @@ const categorias = {
     tipo: "loja", eyebrow: "arte para vestir", titulo: "Arte no Tecido",
     texto: "Cangas, lenços e pareôs com as aquarelas da Carola estampadas, para usar e levar a arte com você."
   },
-  "murais": {
-    tipo: "galeria", eyebrow: "projetos", titulo: "Murais",
-    texto: "Pintura em paredes para casas, lojas, restaurantes e espaços de convivência. Cada mural é pensado para o lugar e para quem vai viver nele.",
-    cta: "Pedir orçamento", wa: "Olá, Carola! Quero um orçamento para um mural.",
-    cores: ["#8a9a86", "#c9a882", "#b07a6e", "#7d9a8c"], total: 9
-  },
-  "estampas": {
-    tipo: "galeria", eyebrow: "design de superfície", titulo: "Estampas",
-    texto: "Estampas autorais criadas a partir das aquarelas, para moda, decoração, papelaria e outros produtos.",
-    cta: "Falar sobre estampas", wa: "Olá, Carola! Tenho interesse nas estampas.",
-    cores: ["#d9c4b2", "#7d9a8c", "#b07a6e", "#c9a882", "#5d6b7a"], total: 12
-  },
 };
 
 const $ = (id) => document.getElementById(id);
