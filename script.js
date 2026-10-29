@@ -503,18 +503,39 @@ if ($("colecao")) {
 const lightbox = document.createElement("div");
 lightbox.className = "lightbox";
 lightbox.hidden = true;
-lightbox.innerHTML = `<button type="button" class="lightbox-close" aria-label="Fechar">×</button><img alt=""><p class="lightbox-cap"></p>`;
+lightbox.innerHTML = `<button type="button" class="lightbox-close" aria-label="Fechar">×</button><img alt=""><video muted loop playsinline controls controlslist="nodownload noremoteplayback" disablepictureinpicture hidden></video><p class="lightbox-cap"></p>`;
 document.body.appendChild(lightbox);
-const closeLightbox = () => { lightbox.hidden = true; document.body.classList.remove("no-scroll"); };
+let videoDeOrigem = null; // vídeo do carrossel que foi ampliado (volta a tocar ao fechar)
+const closeLightbox = () => {
+  const v = lightbox.querySelector("video");
+  v.pause(); v.removeAttribute("src"); v.load(); v.hidden = true;
+  lightbox.querySelector("img").hidden = false;
+  if (videoDeOrigem) { videoDeOrigem.play().catch(() => {}); videoDeOrigem = null; }
+  lightbox.hidden = true;
+  document.body.classList.remove("no-scroll");
+};
 document.addEventListener("click", (e) => {
-  const img = e.target.closest("img.product-img, .gallery img, .grid-gallery img");
+  const img = e.target.closest("img.product-img, .gallery img, .grid-gallery img, .slides video");
   if (img) {
-    lightbox.querySelector("img").src = img.currentSrc || img.src;
-    lightbox.querySelector("img").alt = img.alt;
-    lightbox.querySelector(".lightbox-cap").textContent = img.alt;
+    const ehVideo = img.tagName === "VIDEO";
+    const lbImg = lightbox.querySelector("img"), lbVideo = lightbox.querySelector("video");
+    lbImg.hidden = ehVideo;
+    lbVideo.hidden = !ehVideo;
+    if (ehVideo) {
+      lbVideo.poster = img.poster;
+      lbVideo.src = img.currentSrc || img.src;
+      lbVideo.currentTime = img.currentTime || 0;
+      lbVideo.play().catch(() => {});
+      img.pause();
+      videoDeOrigem = img;
+    } else {
+      lbImg.src = img.currentSrc || img.src;
+      lbImg.alt = img.alt;
+    }
+    lightbox.querySelector(".lightbox-cap").textContent = ehVideo ? img.getAttribute("aria-label") || "" : img.alt;
     lightbox.hidden = false;
     document.body.classList.add("no-scroll");
-  } else if (lightbox.contains(e.target) && e.target.tagName !== "IMG") closeLightbox();
+  } else if (lightbox.contains(e.target) && !["IMG", "VIDEO"].includes(e.target.tagName)) closeLightbox();
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
 // ---- Simulador de valor de referência (orcamento.html) ----
