@@ -8,17 +8,23 @@ document.getElementById("creditLink").href = `https://wa.me/${LITOCODE_WHATSAPP}
 // (ex.: murais/) e liste aqui. Sem fotos, aparecem blocos de cor no lugar.
 const fotos = {
   "personalizadas": ["AQUARELAS-PERSONALIZADAS/1.jpeg?v=2", "AQUARELAS-PERSONALIZADAS/2.jpeg?v=2", "AQUARELAS-PERSONALIZADAS/3-sevilha.jpg?v=2"],
-  "estampas": ["ESTAMPAS-WEB/iemanja.jpg", "ESTAMPAS-WEB/maragogipinho.jpg", "ESTAMPAS-WEB/cordel.jpg"],
+  "estampas": ["ESTAMPAS-WEB/iemanja.jpg", "ESTAMPAS-WEB/maragogipinho.jpg", "ESTAMPAS-WEB/cordel.jpg?v=2"],
   // "murais": ["murais/1.jpg", "murais/2.jpg", "murais/3.jpg"],
 };
 
 // Carrosséis: quadrados de uma seção com várias fotos que deslizam (setas, dedo ou mouse). A posição na lista é o
 // número do quadrado (0 = primeiro). Cada item é o caminho de uma foto ou { video, poster } para um vídeo.
 const carrosseis = {
+  // Estampas: os três quadrados são carrosséis (Iemanjá, Maragogipinho e Cordel).
+  "estampas": [
+    { alt: "Estampa Iemanjá", itens: ["ESTAMPAS-WEB/iemanja.jpg", "ESTAMPAS-WEB/estampa1.jpg"] },
+    { alt: "Estampa Maragogipinho", itens: ["ESTAMPAS-WEB/maragogipinho.jpg", "ESTAMPAS-WEB/maragogipinho2.jpg"] },
+    { alt: "Estampa Cordel", itens: ["ESTAMPAS-WEB/cordel.jpg?v=2", "ESTAMPAS-WEB/cordel2.jpg"] },
+  ],
   "murais": [
-    { alt: "Mural", itens: ["MURAIS-WEB/mural-2.jpg", "MURAIS-WEB/mural-0.jpg", "MURAIS-WEB/mural-1.jpg", "MURAIS-WEB/mural-3.jpg"] },
-    { alt: "Mural", itens: ["MURAIS-WEB/mural-4.jpg", { video: "MURAIS-WEB/mural-video.mp4", poster: "MURAIS-WEB/mural-video-poster.jpg" }, "MURAIS-WEB/mural-5.jpg"] },
-    { alt: "Mural", itens: ["MURAIS-WEB/mural-6.jpg", "MURAIS-WEB/mural-7.jpg", "MURAIS-WEB/mural-8.jpg"] },
+    { alt: "Mural", itens: ["MURAIS-WEB/mural-2.jpg", "MURAIS-WEB/mural-0.jpg", "MURAIS-WEB/mural-1.jpg", "MURAIS-WEB/mural-3.jpg", { video: "MURAIS-WEB/mural-video-2.mp4", poster: "MURAIS-WEB/mural-video-2-poster.jpg" }] },
+    { alt: "Mural", itens: ["MURAIS-WEB/mural-4.jpg", "MURAIS-WEB/mural-5.jpg", { video: "MURAIS-WEB/mural-video-1.mp4", poster: "MURAIS-WEB/mural-video-1-poster.jpg" }] },
+    { alt: "Mural", itens: ["MURAIS-WEB/mural-6.jpg", "MURAIS-WEB/mural-7.jpg", "MURAIS-WEB/mural-8.jpg", { video: "MURAIS-WEB/mural-video-3.mp4", poster: "MURAIS-WEB/mural-video-3-poster.jpg" }] },
   ],
 };
 
