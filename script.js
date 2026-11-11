@@ -15,12 +15,6 @@ const fotos = {
 // Carrosséis: quadrados de uma seção com várias fotos que deslizam (setas, dedo ou mouse). A posição na lista é o
 // número do quadrado (0 = primeiro). Cada item é o caminho de uma foto ou { video, poster } para um vídeo.
 const carrosseis = {
-  // Arte no Tecido: o 1º quadrado (Itacimirim) e o 2º (Mar é Abrigo) e o 3º (os dois pareôs) são carrosséis.
-  "tecido": [
-    { alt: "Canga Itacimirim", itens: ["CANGAS-WEB/itacimirim.jpg", "CANGAS-WEB/itacimirim-2.jpg", "CANGAS-WEB/itacimirim-3.jpg", "CANGAS-WEB/itacimirim-4.jpg"] },
-    { alt: "Canga Mar é Abrigo", itens: ["CANGAS-WEB/mar-e-abrigo-1.jpg", "CANGAS-WEB/mar-e-abrigo-2.jpg", "CANGAS-WEB/mar-e-abrigo-3.jpg"] },
-    { alt: "Pareô", itens: ["PAREOS-WEB/pareo-itacimirim.jpg", "PAREOS-WEB/pareo-mar-e-abrigo.jpg"] },
-  ],
   // Estampas: os três quadrados são carrosséis (Iemanjá, Maragogipinho e Cordel).
   "estampas": [
     { alt: "Estampa Iemanjá", itens: ["ESTAMPAS-WEB/iemanja.jpg", "ESTAMPAS-WEB/estampa1.jpg"] },
@@ -33,6 +27,9 @@ const carrosseis = {
     { alt: "Mural", itens: ["MURAIS-WEB/mural-6.jpg", "MURAIS-WEB/mural-7.jpg", "MURAIS-WEB/mural-8.jpg", { video: "MURAIS-WEB/mural-video-3.mp4", poster: "MURAIS-WEB/mural-video-3-poster.jpg" }] },
   ],
 };
+
+// Fotos que aparecem inteiras, ajustadas à largura do cartão, em vez de cortadas no quadro vertical.
+const PELA_LARGURA = new Set(["CANGAS-WEB/itacimirim.jpg", "CANGAS-WEB/mar-e-abrigo-1.jpg", "PAREOS-WEB/pareo-itacimirim.jpg", "PAREOS-WEB/pareo-mar-e-abrigo.jpg"]);
 
 // Parte da foto que fica visível na miniatura (as miniaturas cortam a foto). Padrão: centro.
 // Valores: "left", "right", "top", "bottom", "center" ou percentuais como "20% 50%".
@@ -54,6 +51,10 @@ const categorias = {
     texto: "Veja o passo a passo de como ter a aquarela dos seus sonhos.",
     cta: "Quero um orçamento", href: "orcamento.html",
     cores: ["#b07a6e", "#c9a882", "#8a9a86", "#e3d2c0"], total: 9
+  },
+  "tecido": {
+    tipo: "loja", eyebrow: "arte para vestir", titulo: "Arte no Tecido",
+    texto: "Leve a minha arte para os seus momentos de descanso e lazer.",
   },
   "prints": {
     tipo: "loja", eyebrow: "arquivo digital", titulo: "Prints",
@@ -126,7 +127,7 @@ const observeReveals = () => document.querySelectorAll(".reveal:not(.in)").forEa
 
 // ---- Loja e carrinho ----
 // Substitua pelas obras reais. image: caminho da foto (ex.: "obras/obra-1.jpg"); vazio = bloco de cor.
-// cat: "fine-art" | "prints". Os ids não podem se repetir.
+// cat: "fine-art" | "prints" | "tecido". Os ids não podem se repetir. descricao: texto opcional no cartão.
 // A página inicial mostra só os 3 primeiros de cada categoria; "Ver mais" mostra todos.
 const obras = [
   { id: 31, cat: "fine-art", titulo: "Cajueiro", tecnica: "Aquarela", cor: "#8a9a86", image: "AQUARELAS/cajueiro.jpg?v=2" },
@@ -159,19 +160,28 @@ const obras = [
   { id: 25, cat: "prints", titulo: "Surf Sunset Whale", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/surf-sunset-whale.jpg?v=2" },
   { id: 26, cat: "prints", titulo: "Surfgirl", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/surfgirl.jpg?v=2" },
   { id: 27, cat: "prints", titulo: "Axé", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/axe.jpg?v=1" },
+  { id: 51, cat: "tecido", titulo: "Canga Itacimirim", tecnica: "Canga", medidas: "1,40 × 1,15 m", descricao: "Tecido 100% viscose.\nAcompanha saquinho de tecido 100% algodão cru.", preco: 190, cor: "#e3d2c0", image: "CANGAS-WEB/itacimirim-4.jpg", extras: ["CANGAS-WEB/itacimirim-2.jpg", "CANGAS-WEB/itacimirim-3.jpg", "CANGAS-WEB/itacimirim.jpg"] },
+  { id: 52, cat: "tecido", titulo: "Canga Mar é Abrigo", tecnica: "Canga", medidas: "1,40 × 1,15 m", descricao: "Tecido 100% viscose.\nAcompanha saquinho de tecido 100% algodão cru.", preco: 190, cor: "#a7c4d4", image: "CANGAS-WEB/mar-e-abrigo-2.jpg", extras: ["CANGAS-WEB/mar-e-abrigo-3.jpg", "CANGAS-WEB/mar-e-abrigo-1.jpg"] },
+  { id: 53, cat: "tecido", titulo: "Lenço Itacimirim", tecnica: "Lenço", medidas: "0,70 × 0,70 m", rotuloMedida: "Medidas", descricao: "Tecido 100% viscose.\nAcompanha saquinho de tecido 100% algodão cru.", preco: 100, cor: "#e3d2c0", image: "LENCOS-WEB/lenco-itacimirim.jpg" },
+  { id: 54, cat: "tecido", titulo: "Lenço Mar é Abrigo", tecnica: "Lenço", medidas: "0,70 × 0,70 m", rotuloMedida: "Medidas", descricao: "Tecido 100% viscose.\nAcompanha saquinho de tecido 100% algodão cru.", preco: 100, cor: "#a7c4d4", image: "LENCOS-WEB/lenco-mar-e-abrigo.jpg" },
+  { id: 55, cat: "tecido", titulo: "Pareô Itacimirim", tecnica: "Pareô", antes: "A peça possui botões e casas que possibilitam diversas formas de uso.", medidas: "1,74 × 0,70 m", rotuloMedida: "Medidas", descricao: "Tecido 100% viscose.\nAcompanha saquinho de tecido 100% algodão cru.", preco: 190, cor: "#e3d2c0", image: "PAREOS-WEB/pareo-itacimirim.jpg" },
+  { id: 56, cat: "tecido", titulo: "Pareô Mar é Abrigo", tecnica: "Pareô", antes: "A peça possui botões e casas que possibilitam diversas formas de uso.", medidas: "1,74 × 0,70 m", rotuloMedida: "Medidas", descricao: "Tecido 100% viscose.\nAcompanha saquinho de tecido 100% algodão cru.", preco: 190, cor: "#a7c4d4", image: "PAREOS-WEB/pareo-mar-e-abrigo.jpg" },
 ];
 
 
 // Tamanhos e preços: só a fine-art é vendida em A5, A4, A3 e A2 (o cliente escolhe no cartão da obra).
 // Os preços valem para a categoria inteira; para uma obra diferente, adicione  precos: { A5: 0, A4: 0, A3: 0, A2: 0 }  nela.
-// Itens sem tamanho (prints) usam o campo preco. Prints são arquivos digitais: sem tamanho e sem frete.
+// Itens sem tamanho (prints e tecido) usam o campo preco. Prints são arquivos digitais: sem tamanho e sem frete.
 const TAMANHOS = { A5: "14,8 × 21 cm", A4: "21 × 29,7 cm", A3: "29,7 × 42 cm", A2: "42 × 59,4 cm" };
 const PRECOS = {
   "fine-art": { A5: 210, A4: 300, A3: 500, A2: 700 },
 };
 const tabela = (o) => o.precos || PRECOS[o.cat] || null;
 const precoDe = (o, size) => (tabela(o) ? tabela(o)[size] : o.preco);
-const detalhe = (o, size) => [o.tecnica, tabela(o) ? TAMANHOS[size] : o.medidas].filter(Boolean).join(" · ");
+// Na linha de detalhe do cartão: prints e aquarelas mostram "técnica · tamanho"; o tecido mostra "Medida: ...".
+const detalhe = (o, size) => o.cat === "tecido"
+  ? (o.medidas ? (o.rotuloMedida || "Medida") + ": " + o.medidas : o.tecnica)
+  : [o.tecnica, tabela(o) ? TAMANHOS[size] : o.medidas].filter(Boolean).join(" · ");
 const porId = (id) => obras.find((o) => o.id === id);
 
 const sel = {}; // tamanho escolhido em cada obra (padrão A4)
@@ -181,7 +191,7 @@ let cart = []; // [{ id, size }]
 try { cart = (JSON.parse(localStorage.getItem("carola-cart-v2")) || []).filter((c) => porId(c.id)); } catch (e) { }
 
 const media = (o, cls) => o.image
-  ? `<img class="${cls}" src="${esc(o.image)}" alt="${esc(txt(o.titulo))}" loading="lazy">`
+  ? `<img class="${cls}${PELA_LARGURA.has(o.image) ? " pela-largura" : ""}" src="${esc(o.image)}" alt="${esc(txt(o.titulo))}" loading="lazy">`
   : `<div class="${cls} ph" style="--c1:${o.cor};--c2:${o.cor}"></div>`;
 
 // Obras com `extras` (outras fotos, como o mockup) ganham um carrossel: deslizar para o lado ou usar as setas.
@@ -190,7 +200,7 @@ function slider(o) {
 }
 function sliderHtml(fotos, altDe) {
   const imgs = fotos.map((src, i) => typeof src === "string"
-    ? `<img class="product-img" src="${esc(src)}" alt="${esc(altDe(i))}" loading="lazy">`
+    ? `<img class="product-img${PELA_LARGURA.has(src) ? " pela-largura" : ""}" src="${esc(src)}" alt="${esc(altDe(i))}" loading="lazy">`
     : `<video class="product-img" src="${esc(src.video)}" poster="${esc(src.poster || "")}" aria-label="${esc(altDe(i))}" muted loop playsinline preload="metadata" disablepictureinpicture controlslist="nodownload"></video>`).join("");
   return `<div class="slider"><div class="slides">${imgs}</div>
     <button type="button" class="slide-btn prev" data-slide="-1" aria-label="Foto anterior">‹</button>
@@ -218,10 +228,12 @@ function renderShop() {
       return `<article class="product reveal in">
         ${o.extras ? slider(o) : media(o, "product-img")}
         <div class="product-info">
-          <div class="product-row"><h3>${esc(o.titulo).replace(/\n/g, "<br>")}</h3><span class="product-price">${brl(precoDe(o, size))}</span></div>
-          <p class="product-tech">${esc(detalhe(o, size))}</p>
+          <div class="product-row"><h3>${esc(o.titulo).replace(/\n/g, "<br>")}</h3><span class="product-price">${o.emBreve ? "" : brl(precoDe(o, size))}</span></div>
+          ${o.antes ? `<p class="product-desc product-antes">${esc(o.antes)}</p>` : ""}
+          <p class="product-tech${o.descricao ? " com-desc" : ""}">${esc(detalhe(o, size))}</p>
+          ${o.descricao ? `<p class="product-desc">${esc(o.descricao).replace(/\n/g, "<br>")}</p>` : ""}
           ${sizes}
-          <button type="button" class="pill ${added ? "pill-line" : "pill-dark"} product-btn" data-add="${o.id}" ${added ? "disabled" : ""}>${added ? "No carrinho" : "Adicionar ao carrinho"}</button>
+          <button type="button" class="pill ${added ? "pill-line" : "pill-dark"} product-btn" data-add="${o.id}" ${added || o.emBreve ? "disabled" : ""}>${o.emBreve ? "Em breve" : added ? "No carrinho" : "Adicionar ao carrinho"}</button>
         </div></article>`;
     }).join("");
   });

@@ -347,3 +347,15 @@ img { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -we
   .sobre-fotos { grid-template-columns: repeat(2, minmax(0, 360px)); justify-content: center; }
 }
 @media (max-width: 600px) { .linha-tempo li, .expo li { grid-template-columns: 1fr; gap: 4px; } }
+
+.product-desc { font-size: .8rem; line-height: 1.5; opacity: .75; margin: 2px 0 10px; }
+
+/* foto ajustada à largura do cartão: aparece inteira, sem cortar */
+.product-img.pela-largura { object-fit: contain; background: #fff; }
+
+/* medida e descrição ficam coladas, sem espaço entre elas */
+.product-tech.com-desc { margin-bottom: 0; }
+.product-tech.com-desc + .product-desc { margin-top: -4px; }
+
+/* texto acima das medidas, colado nelas */
+.product-desc.product-antes { margin: 0 0 -4px; }
