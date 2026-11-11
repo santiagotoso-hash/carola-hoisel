@@ -15,6 +15,12 @@ const fotos = {
 // Carrosséis: quadrados de uma seção com várias fotos que deslizam (setas, dedo ou mouse). A posição na lista é o
 // número do quadrado (0 = primeiro). Cada item é o caminho de uma foto ou { video, poster } para um vídeo.
 const carrosseis = {
+  // Arte no Tecido: o 1º quadrado (Itacimirim) e o 2º (Mar é Abrigo) e o 3º (os dois pareôs) são carrosséis.
+  "tecido": [
+    { alt: "Canga Itacimirim", itens: ["CANGAS-WEB/itacimirim.jpg", "CANGAS-WEB/itacimirim-2.jpg", "CANGAS-WEB/itacimirim-3.jpg", "CANGAS-WEB/itacimirim-4.jpg"] },
+    { alt: "Canga Mar é Abrigo", itens: ["CANGAS-WEB/mar-e-abrigo-1.jpg", "CANGAS-WEB/mar-e-abrigo-2.jpg", "CANGAS-WEB/mar-e-abrigo-3.jpg"] },
+    { alt: "Pareô", itens: ["PAREOS-WEB/pareo-itacimirim.jpg", "PAREOS-WEB/pareo-mar-e-abrigo.jpg"] },
+  ],
   // Estampas: os três quadrados são carrosséis (Iemanjá, Maragogipinho e Cordel).
   "estampas": [
     { alt: "Estampa Iemanjá", itens: ["ESTAMPAS-WEB/iemanja.jpg", "ESTAMPAS-WEB/estampa1.jpg"] },
@@ -53,10 +59,6 @@ const categorias = {
     tipo: "loja", eyebrow: "arquivo digital", titulo: "Prints",
     texto: "Compre o arquivo em alta resolução e imprima onde e no tamanho que preferir. O arquivo é enviado depois da confirmação do pagamento."
   },
-  "tecido": {
-    tipo: "loja", eyebrow: "arte para vestir", titulo: "Arte no Tecido",
-    texto: "Cangas, lenços e pareôs com as aquarelas da Carola estampadas, para usar e levar a arte com você."
-  },
 };
 
 const $ = (id) => document.getElementById(id);
@@ -74,6 +76,13 @@ document.querySelectorAll(".gallery, .grid-gallery[data-count]").forEach((g) => 
   if (g.dataset.h) g.style.setProperty("--h", g.dataset.h + "px");
   for (let i = 0; i < count; i++) {
     const c = (carrosseis[section] || [])[i];
+    if (c && c.itens.length === 1 && typeof c.itens[0] === "string") {
+      const foto = document.createElement("img");
+      foto.className = "ph reveal";
+      foto.src = c.itens[0]; foto.alt = c.alt; foto.loading = "lazy";
+      g.appendChild(foto);
+      continue;
+    }
     if (c) {
       const caixa = document.createElement("div");
       caixa.innerHTML = sliderHtml(c.itens, (n) => c.alt + (n ? " — foto " + (n + 1) : ""));
@@ -117,7 +126,7 @@ const observeReveals = () => document.querySelectorAll(".reveal:not(.in)").forEa
 
 // ---- Loja e carrinho ----
 // Substitua pelas obras reais. image: caminho da foto (ex.: "obras/obra-1.jpg"); vazio = bloco de cor.
-// cat: "fine-art" | "prints" | "tecido". Os ids não podem se repetir.
+// cat: "fine-art" | "prints". Os ids não podem se repetir.
 // A página inicial mostra só os 3 primeiros de cada categoria; "Ver mais" mostra todos.
 const obras = [
   { id: 31, cat: "fine-art", titulo: "Cajueiro", tecnica: "Aquarela", cor: "#8a9a86", image: "AQUARELAS/cajueiro.jpg?v=2" },
@@ -150,18 +159,12 @@ const obras = [
   { id: 25, cat: "prints", titulo: "Surf Sunset Whale", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/surf-sunset-whale.jpg?v=2" },
   { id: 26, cat: "prints", titulo: "Surfgirl", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/surfgirl.jpg?v=2" },
   { id: 27, cat: "prints", titulo: "Axé", tecnica: "Arquivo digital", medidas: "alta resolução", preco: 100, cor: "#d9c4b2", image: "PRINTS-WEB/axe.jpg?v=1" },
-  { id: 21, cat: "tecido", titulo: "Canga", tecnica: "Canga", medidas: "00 × 00 cm", preco: 180, cor: "#8a9a86", image: "" },
-  { id: 22, cat: "tecido", titulo: "Lenço", tecnica: "Lenço de seda", medidas: "00 × 00 cm", preco: 220, cor: "#e3d2c0", image: "" },
-  { id: 23, cat: "tecido", titulo: "Pareô", tecnica: "Pareô", medidas: "00 × 00 cm", preco: 160, cor: "#b07a6e", image: "" },
-  { id: 24, cat: "tecido", titulo: "Canga II", tecnica: "Canga", medidas: "00 × 00 cm", preco: 180, cor: "#c9a882", image: "" },
-  { id: 25, cat: "tecido", titulo: "Lenço II", tecnica: "Lenço de seda", medidas: "00 × 00 cm", preco: 220, cor: "#7d9a8c", image: "" },
-  { id: 26, cat: "tecido", titulo: "Pareô II", tecnica: "Pareô", medidas: "00 × 00 cm", preco: 160, cor: "#5d6b7a", image: "" },
 ];
 
 
 // Tamanhos e preços: só a fine-art é vendida em A5, A4, A3 e A2 (o cliente escolhe no cartão da obra).
 // Os preços valem para a categoria inteira; para uma obra diferente, adicione  precos: { A5: 0, A4: 0, A3: 0, A2: 0 }  nela.
-// Itens sem tamanho (prints e tecido) usam o campo preco. Prints são arquivos digitais: sem tamanho e sem frete.
+// Itens sem tamanho (prints) usam o campo preco. Prints são arquivos digitais: sem tamanho e sem frete.
 const TAMANHOS = { A5: "14,8 × 21 cm", A4: "21 × 29,7 cm", A3: "29,7 × 42 cm", A2: "42 × 59,4 cm" };
 const PRECOS = {
   "fine-art": { A5: 210, A4: 300, A3: 500, A2: 700 },

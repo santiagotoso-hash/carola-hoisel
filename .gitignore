@@ -15,3 +15,9 @@ _backup-imagens/
 
 # originais dos murais (alta resolução): publicar só as versões leves de MURAIS-WEB
 MURAIS/
+
+# originais das cangas (alta resolução): publicar só as versões leves de CANGAS-WEB
+CANGAS/
+
+# originais dos pareôs (alta resolução): publicar só as versões leves de PAREOS-WEB
+PAEROS/
